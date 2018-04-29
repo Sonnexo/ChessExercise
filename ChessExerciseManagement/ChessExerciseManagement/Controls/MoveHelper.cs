@@ -3,7 +3,7 @@ using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Models.Pieces;
 
 namespace ChessExerciseManagement.Controls {
-    public static class MoveController {
+    public static class MoveHelper {
         public static List<Field> GetAccessibleFieldsPawn(Board board, Piece piece, int dY) {
             var list = new List<Field>();
 

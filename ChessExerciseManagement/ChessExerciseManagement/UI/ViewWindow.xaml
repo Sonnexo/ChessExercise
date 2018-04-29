@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="ViewWindow" Height="854" Width="1011.5">
     <Grid>
-        <uc:BoardControl x:Name="boardControl" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <uc:BoardView x:Name="boardControl" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
         <Button x:Name="SavePictureButton" Content="Save as Picture" HorizontalAlignment="Left" Margin="815,136,0,0" VerticalAlignment="Top" Width="100" Click="SavePictureButton_Click" RenderTransformOrigin="0.76,-3.075"/>
     </Grid>
 </Window>

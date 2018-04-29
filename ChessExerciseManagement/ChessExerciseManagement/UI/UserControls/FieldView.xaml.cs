@@ -3,24 +3,26 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Controls;
 
-using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Events;
 using ChessExerciseManagement.Base;
+using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.UI.UserControls {
-    public partial class FieldControl : UserControl {
-        private Field m_field;
-        private BoardControl m_boardControl;
+    public partial class FieldView : UserControl {
+        private FieldController m_field;
+        private BoardView m_boardControl;
 
         private bool m_readonly;
 
-        public FieldControl() {
+        public FieldView() {
             InitializeComponent();
         }
 
-        public void SetField(Field field) {
-            m_field = field;
+        public void SetField(FieldController fieldController) {
+            m_field = fieldController;
             m_field.PieceChange += Field_PieceChange;
+
+            var field = fieldController.Field;
 
             if (field.X % 2 == field.Y % 2) {
                 Background = Brushes.AliceBlue;
@@ -47,10 +49,10 @@ namespace ChessExerciseManagement.UI.UserControls {
                 }
             }
 
-            imageViewer.Source = field.Piece?.GetBitmapImage();
+            imageViewer.Source = fieldController.PieceController?.GetBitmapImage();
         }
 
-        public void SetBoardControl(BoardControl boardControl) {
+        public void SetBoardControl(BoardView boardControl) {
             m_boardControl = boardControl;
         }
 
@@ -75,7 +77,7 @@ namespace ChessExerciseManagement.UI.UserControls {
             var markedFieldControls = m_boardControl.MarkedFieldControls;
 
             if (markedFieldControls.Contains(this)) {
-                var markedPiece = m_boardControl.MarkedFieldControl.m_field.Piece;
+                var markedPiece = m_boardControl.MarkedFieldControl.m_field.Field.Piece;
                 markedPiece.SetField(m_field);
 
                 foreach (var fieldControl in markedFieldControls) {
@@ -98,7 +100,7 @@ namespace ChessExerciseManagement.UI.UserControls {
 
             markedFieldControls.Clear();
 
-            var piece = m_field.Piece;
+            var piece = m_field.Field.Piece;
             if (piece == null || piece.Affiliation != game.WhosTurn) {
                 return;
             }

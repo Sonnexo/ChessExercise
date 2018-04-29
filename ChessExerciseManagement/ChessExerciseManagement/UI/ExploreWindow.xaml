@@ -18,7 +18,7 @@
         <Button x:Name="ExportButton" Content="Export" HorizontalAlignment="Left" Margin="642,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ExportButton_Click"/>
 
         <Viewbox StretchDirection="Both" Stretch="UniformToFill" Height="400" Width="400" Margin="838,53,103,116">
-            <UserControls:BoardControl x:Name="Boardcontrol" Height="800" Width="800"/>
+            <UserControls:BoardView x:Name="Boardcontrol" Height="800" Width="800"/>
         </Viewbox>
     </Grid>
 </Window>
