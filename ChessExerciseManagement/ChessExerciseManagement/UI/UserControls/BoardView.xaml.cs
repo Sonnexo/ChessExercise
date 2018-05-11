@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
-
-using ChessExerciseManagement.Models;
 using System.Collections.Generic;
+
 using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.UI.UserControls {
@@ -12,6 +11,17 @@ namespace ChessExerciseManagement.UI.UserControls {
         public FieldView MarkedFieldControl;
 
         private bool m_readonly;
+        public bool ReadOnly {
+            private get {
+                return m_readonly;
+            }
+            set {
+                m_readonly = value;
+                foreach (var view in FieldViews) {
+                    view.ReadOnly = value;
+                }
+            }
+        }
 
         private BoardController m_boardController;
         public BoardController BoardController {
@@ -23,7 +33,7 @@ namespace ChessExerciseManagement.UI.UserControls {
                 var fields = value.FieldControllers;
                 for (int y = 0; y < 8; y++) {
                     for (int x = 0; x < 8; x++) {
-                        FieldViews[x, y].SetField(fields[x, y]);
+                        FieldViews[x, y].FieldController = fields[x, y];
                     }
                 }
             }
@@ -39,15 +49,8 @@ namespace ChessExerciseManagement.UI.UserControls {
                 for (int x = 0; x < 8; x++) {
                     var identifier = "f" + x + y;
                     FieldViews[x, y] = (FieldView)FindName(identifier);
-                    FieldViews[x, y].SetBoardControl(this);
+                    FieldViews[x, y].BoardView = this;
                 }
-            }
-        }
-
-        public void SetReadonly(bool read) {
-            m_readonly = read;
-            foreach (var contr in FieldViews) {
-                contr.SetReadonly(read);
             }
         }
     }

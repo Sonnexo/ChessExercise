@@ -1,10 +1,11 @@
-﻿using ChessExerciseManagement.Controls;
-using ChessExerciseManagement.Models;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.UI {
     public partial class ViewWindow : Window {
@@ -16,7 +17,7 @@ namespace ChessExerciseManagement.UI {
             var gc = new GameController(fen, FenMode.Jonas);
             var bc = gc.BoardController;
 
-            BoardView.SetReadonly(true);
+            BoardView.ReadOnly = true;
             BoardView.BoardController = bc;
         }
 

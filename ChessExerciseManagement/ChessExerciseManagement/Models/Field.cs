@@ -4,12 +4,10 @@ using ChessExerciseManagement.Models.Pieces;
 namespace ChessExerciseManagement.Models {
     public class Field : BaseClass {
         public int X {
-            private set;
             get;
         }
 
         public int Y {
-            private set;
             get;
         }
 

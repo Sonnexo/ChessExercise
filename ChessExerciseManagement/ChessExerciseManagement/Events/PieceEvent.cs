@@ -3,7 +3,6 @@
 namespace ChessExerciseManagement.Events {
     public class PieceEvent {
         public PieceController PieceController {
-            private set;
             get;
         }
 

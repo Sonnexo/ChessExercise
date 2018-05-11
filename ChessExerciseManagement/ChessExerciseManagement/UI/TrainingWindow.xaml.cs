@@ -1,11 +1,12 @@
-﻿using ChessExerciseManagement.Controls;
-using ChessExerciseManagement.Exercises;
-using ChessExerciseManagement.Models;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
+using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
     public partial class TrainingWindow : Window {
@@ -21,14 +22,12 @@ namespace ChessExerciseManagement.UI {
 
         private void SetNewGame() {
             GameController = new GameController();
-            var bc = GameController.BoardController;
-            BoardView.BoardController = bc;
+            BoardView.BoardController = GameController.BoardController;
         }
 
         private void SetNewGame(string fen) {
             GameController = new GameController(fen, FenMode.Jonas);
-            var bc = GameController.BoardController;
-            BoardView.BoardController = bc;
+            BoardView.BoardController = GameController.BoardController;
         }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e) {

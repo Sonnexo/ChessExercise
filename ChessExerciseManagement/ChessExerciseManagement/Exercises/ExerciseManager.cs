@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 
 namespace ChessExerciseManagement.Exercises {
     public static class ExerciseManager {

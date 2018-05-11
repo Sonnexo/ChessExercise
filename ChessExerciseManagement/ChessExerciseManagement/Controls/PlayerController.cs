@@ -1,21 +1,17 @@
 ﻿using System.Collections.Generic;
 using ChessExerciseManagement.Models;
-using ChessExerciseManagement.Models.Pieces;
 
 namespace ChessExerciseManagement.Controls {
     public class PlayerController {
         public Player Player {
-            private set;
             get;
         }
 
-        public List<PieceController> Pieces {
-            private set;
+        public List<PieceController> PieceControllers {
             get;
         } = new List<PieceController>();
 
-        public List<PieceController> LostPieces {
-            private set;
+        public List<PieceController> LostPieceControllers {
             get;
         } = new List<PieceController>();
 
@@ -24,11 +20,11 @@ namespace ChessExerciseManagement.Controls {
         }
 
         public bool AddPiece(PieceController newPiece) {
-            if (newPiece.PlayerAffiliation != Player.PlayerAffiliation) {
+            if (newPiece.Piece.PlayerAffiliation != Player.PlayerAffiliation) {
                 return false;
             }
 
-            Pieces.Add(newPiece);
+            PieceControllers.Add(newPiece);
 
             Player.Pieces.Add(newPiece.Piece);
             return true;
@@ -40,8 +36,8 @@ namespace ChessExerciseManagement.Controls {
             Player.Pieces.Remove(lostPiece);
             Player.LostPieces.Add(lostPiece);
 
-            Pieces.Remove(lostPieceController);
-            LostPieces.Add(lostPieceController);
+            PieceControllers.Remove(lostPieceController);
+            LostPieceControllers.Add(lostPieceController);
         }
 
         public string GetFenCastle() {
@@ -55,19 +51,6 @@ namespace ChessExerciseManagement.Controls {
             }
 
             return mes;
-        }
-
-        public List<Field> GetAccessibleFields(bool onlyAttacked) {
-            var list = new List<Field>();
-
-            foreach (var piece in Pieces) {
-                if (onlyAttacked && piece.Piece is King) {
-                    continue;
-                }
-                list.AddRange(piece.GetAccessibleFields());
-            }
-
-            return list;
         }
     }
 }

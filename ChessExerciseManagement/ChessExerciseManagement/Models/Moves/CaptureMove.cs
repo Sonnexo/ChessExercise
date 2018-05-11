@@ -5,7 +5,6 @@ using ChessExerciseManagement.Models.Pieces;
 namespace ChessExerciseManagement.Models.Moves {
     public class CaptureMove : Move {
         public Piece CapturedPiece {
-            private set;
             get;
         }
 
@@ -31,7 +30,7 @@ namespace ChessExerciseManagement.Models.Moves {
         public override string ToString() {
             var str = string.Empty;
 
-            var c = char.ToUpper(MovedPiece.GetFenChar());
+            var c = char.ToUpper(MovedPiece.FenChar);
             if (c != 'P') {
                 str += c;
             }

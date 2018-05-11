@@ -4,22 +4,18 @@ using ChessExerciseManagement.Models.Pieces;
 namespace ChessExerciseManagement.Models.Moves {
     public class CastleMove : Move {
         public bool KingSide {
-            private set;
             get;
         }
 
         public Field OldFieldRook {
-            private set;
             get;
         }
 
         public Field NewFieldRook {
-            private set;
             get;
         }
 
         public Piece Rook {
-            private set;
             get;
         }
 

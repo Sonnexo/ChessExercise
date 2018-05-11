@@ -2,15 +2,23 @@
 
 namespace ChessExerciseManagement.Models.Pieces {
     public abstract class Piece : BaseClass {
-        public PlayerAffiliation Affiliation {
-            set;
-            get;
+        private PlayerAffiliation m_playerAffiliation;
+        public PlayerAffiliation PlayerAffiliation {
+            set {
+                m_playerAffiliation = value;
+                if (m_playerAffiliation == PlayerAffiliation.Black) {
+                    FenChar = char.ToLower(FenChar);
+                }
+            }
+            get {
+                return m_playerAffiliation;
+            }
         }
 
         private Player m_player;
         public Player Player {
             set {
-                Affiliation = value.PlayerAffiliation;
+                PlayerAffiliation = value.PlayerAffiliation;
                 m_player = value;
             }
             get {
@@ -22,7 +30,6 @@ namespace ChessExerciseManagement.Models.Pieces {
         public Field Field {
             set {
                 m_field = value;
-                m_field.Piece = this;
             }
             get {
                 return m_field;
@@ -34,14 +41,9 @@ namespace ChessExerciseManagement.Models.Pieces {
             get;
         }
 
-        protected char m_key;
-
-        public Piece() {
-
-        }
-
-        public char GetFenChar() {
-            return m_key;
+        public char FenChar {
+            protected set;
+            get;
         }
     }
 }

@@ -36,7 +36,6 @@ namespace ChessExerciseManagement.Models {
         } = 1;
 
         public List<Move> Moves {
-            private set;
             get;
         } = new List<Move>();
 

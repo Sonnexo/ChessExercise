@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 using System.Drawing;
+using System.Collections.Generic;
 
 using ChessExerciseManagement.Models;
-using System.Collections.Generic;
 
 namespace ChessExerciseManagement.Controls {
     public class BoardController {
@@ -114,7 +114,7 @@ namespace ChessExerciseManagement.Controls {
                         emptyFieldCounter = 0;
                     }
 
-                    sb.Append(piece.GetFenChar());
+                    sb.Append(piece.FenChar);
                 }
 
                 if (emptyFieldCounter != 0) {
@@ -146,7 +146,7 @@ namespace ChessExerciseManagement.Controls {
                         emptyFieldCounter = 0;
                     }
 
-                    sb.Append(piece.GetFenChar());
+                    sb.Append(piece.FenChar);
                 }
             }
 

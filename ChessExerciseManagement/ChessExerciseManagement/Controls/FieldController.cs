@@ -1,27 +1,30 @@
-﻿using System;
-using ChessExerciseManagement.Events;
+﻿using ChessExerciseManagement.Events;
 using ChessExerciseManagement.Models;
 
 namespace ChessExerciseManagement.Controls {
     public class FieldController {
         public Field Field {
-            private set;
             get;
         }
-        public Action<object, PieceEvent> PieceChange { get; internal set; }
 
+        public event PieceEventHandler PieceChange;
+        public delegate void PieceEventHandler(object sender, PieceEvent e);
+
+        private PieceController m_pieceController;
         public PieceController PieceController {
-            private set;
-            get;
+            set {
+                m_pieceController = value;
+                Field.Piece = m_pieceController?.Piece;
+
+                PieceChange?.Invoke(this, new PieceEvent(m_pieceController));
+            }
+            get {
+                return m_pieceController;
+            }
         }
 
         public FieldController(int x, int y) {
             Field = new Field(x, y);
-        }
-
-        public void SetPiece(PieceController pieceController) {
-            PieceController = pieceController;
-            Field.Piece = pieceController.Piece;
         }
     }
 }

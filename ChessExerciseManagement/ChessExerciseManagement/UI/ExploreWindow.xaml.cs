@@ -1,22 +1,22 @@
-﻿using ChessExerciseManagement.Controls;
-using ChessExerciseManagement.Exercises;
-using ChessExerciseManagement.Models;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Drawing;
+using System.Collections.Generic;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
+using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
         public ExploreWindow() {
             InitializeComponent();
-            BoardView.SetReadonly(true);
+            BoardView.ReadOnly = true;
 
-            var gameContorller = new GameController("64-w", FenMode.Jonas);
-            var boardController = gameContorller.BoardController;
-            BoardView.BoardController = boardController;
+            var gc = new GameController("64-w", FenMode.Jonas);
+            BoardView.BoardController = gc.BoardController;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) {

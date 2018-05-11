@@ -1,7 +1,9 @@
-﻿using ChessExerciseManagement.Models;
-using ChessExerciseManagement.Models.Pieces;
+﻿using System.Text;
 using System.Collections.Generic;
-using System.Text;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Models.Pieces;
+using System;
 
 namespace ChessExerciseManagement.Controls {
     public class GameController {
@@ -42,10 +44,13 @@ namespace ChessExerciseManagement.Controls {
 
             BoardController.AddPlayer(White);
             BoardController.AddPlayer(Black);
+
+            Game = new Game();
         }
 
         private void AddStandardPieces() {
-
+            AddWhitePieces();
+            AddBlackPieces();
         }
 
         private void ParseFen(string fen) {
@@ -126,6 +131,10 @@ namespace ChessExerciseManagement.Controls {
 
         }
 
+        public void Flip() {
+            Game.WhosTurn = Game.WhosTurn == PlayerAffiliation.White ? PlayerAffiliation.Black : PlayerAffiliation.White;
+        }
+
         private void AddWhitePieces() {
             var fields = BoardController.FieldControllers;
 
@@ -171,26 +180,26 @@ namespace ChessExerciseManagement.Controls {
         private void AddBlackPieces() {
             var fields = BoardController.FieldControllers;
 
-            var rook1 = new PieceController(new Rook(), White, fields[0, 7]);
-            var rook2 = new PieceController(new Rook(), White, fields[7, 7]);
+            var rook1 = new PieceController(new Rook(), Black, fields[0, 7]);
+            var rook2 = new PieceController(new Rook(), Black, fields[7, 7]);
 
-            var knight1 = new PieceController(new Knight(), White, fields[1, 7]);
-            var knight2 = new PieceController(new Knight(), White, fields[6, 7]);
+            var knight1 = new PieceController(new Knight(), Black, fields[1, 7]);
+            var knight2 = new PieceController(new Knight(), Black, fields[6, 7]);
 
-            var bishop1 = new PieceController(new Bishop(), White, fields[2, 7]);
-            var bishop2 = new PieceController(new Bishop(), White, fields[5, 7]);
+            var bishop1 = new PieceController(new Bishop(), Black, fields[2, 7]);
+            var bishop2 = new PieceController(new Bishop(), Black, fields[5, 7]);
 
-            var queen = new PieceController(new Queen(), White, fields[3, 7]);
-            var king = new PieceController(new King(), White, fields[4, 7]);
+            var queen = new PieceController(new Queen(), Black, fields[3, 7]);
+            var king = new PieceController(new King(), Black, fields[4, 7]);
 
-            var pawn1 = new PieceController(new Pawn(), White, fields[0, 6]);
-            var pawn2 = new PieceController(new Pawn(), White, fields[1, 6]);
-            var pawn3 = new PieceController(new Pawn(), White, fields[2, 6]);
-            var pawn4 = new PieceController(new Pawn(), White, fields[3, 6]);
-            var pawn5 = new PieceController(new Pawn(), White, fields[4, 6]);
-            var pawn6 = new PieceController(new Pawn(), White, fields[5, 6]);
-            var pawn7 = new PieceController(new Pawn(), White, fields[6, 6]);
-            var pawn8 = new PieceController(new Pawn(), White, fields[7, 6]);
+            var pawn1 = new PieceController(new Pawn(), Black, fields[0, 6]);
+            var pawn2 = new PieceController(new Pawn(), Black, fields[1, 6]);
+            var pawn3 = new PieceController(new Pawn(), Black, fields[2, 6]);
+            var pawn4 = new PieceController(new Pawn(), Black, fields[3, 6]);
+            var pawn5 = new PieceController(new Pawn(), Black, fields[4, 6]);
+            var pawn6 = new PieceController(new Pawn(), Black, fields[5, 6]);
+            var pawn7 = new PieceController(new Pawn(), Black, fields[6, 6]);
+            var pawn8 = new PieceController(new Pawn(), Black, fields[7, 6]);
 
             Black.AddPiece(rook1);
             Black.AddPiece(rook2);
