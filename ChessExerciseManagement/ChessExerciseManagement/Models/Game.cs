@@ -6,22 +6,22 @@ using ChessExerciseManagement.Models.Moves;
 namespace ChessExerciseManagement.Models {
     public class Game : BaseClass {
         public PlayerAffiliation WhosTurn {
-            private set;
+            set;
             get;
         } = PlayerAffiliation.White;
 
         public Board Board {
-            private set;
+            set;
             get;
         }
 
         public Player White {
-            private set;
+            set;
             get;
         }
 
         public Player Black {
-            private set;
+            set;
             get;
         }
 

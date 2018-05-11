@@ -9,6 +9,16 @@ namespace ChessExerciseManagement.Controls {
             get;
         }
 
+        public List<PieceController> Pieces {
+            private set;
+            get;
+        } = new List<PieceController>();
+
+        public List<PieceController> LostPieces {
+            private set;
+            get;
+        } = new List<PieceController>();
+
         public PlayerController(PlayerAffiliation affiliation) {
             Player = new Player(affiliation);
         }
@@ -18,13 +28,20 @@ namespace ChessExerciseManagement.Controls {
                 return false;
             }
 
+            Pieces.Add(newPiece);
+
             Player.Pieces.Add(newPiece.Piece);
             return true;
         }
 
-        public void NotifyCapturedPiece(Piece lostPiece, Piece capturingPiece) {
+        public void NotifyCapturedPiece(PieceController lostPieceController, PieceController capturingPiece) {
+            var lostPiece = lostPieceController.Piece;
+
             Player.Pieces.Remove(lostPiece);
             Player.LostPieces.Add(lostPiece);
+
+            Pieces.Remove(lostPieceController);
+            LostPieces.Add(lostPieceController);
         }
 
         public string GetFenCastle() {
@@ -43,8 +60,8 @@ namespace ChessExerciseManagement.Controls {
         public List<Field> GetAccessibleFields(bool onlyAttacked) {
             var list = new List<Field>();
 
-            foreach (var piece in Player.Pieces) {
-                if (onlyAttacked && piece is King) {
+            foreach (var piece in Pieces) {
+                if (onlyAttacked && piece.Piece is King) {
                     continue;
                 }
                 list.AddRange(piece.GetAccessibleFields());

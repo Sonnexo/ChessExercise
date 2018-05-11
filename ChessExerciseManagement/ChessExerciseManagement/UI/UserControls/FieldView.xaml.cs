@@ -9,8 +9,8 @@ using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.UI.UserControls {
     public partial class FieldView : UserControl {
-        private FieldController m_field;
-        private BoardView m_boardControl;
+        private FieldController m_fieldController;
+        private BoardView m_boardView;
 
         private bool m_readonly;
 
@@ -19,8 +19,8 @@ namespace ChessExerciseManagement.UI.UserControls {
         }
 
         public void SetField(FieldController fieldController) {
-            m_field = fieldController;
-            m_field.PieceChange += Field_PieceChange;
+            m_fieldController = fieldController;
+            m_fieldController.PieceChange += Field_PieceChange;
 
             var field = fieldController.Field;
 
@@ -49,11 +49,11 @@ namespace ChessExerciseManagement.UI.UserControls {
                 }
             }
 
-            imageViewer.Source = fieldController.PieceController?.GetBitmapImage();
+            ImageViewer.Source = fieldController.PieceController?.GetBitmapImage();
         }
 
         public void SetBoardControl(BoardView boardControl) {
-            m_boardControl = boardControl;
+            m_boardView = boardControl;
         }
 
         public void SetReadonly(bool read) {
@@ -61,10 +61,10 @@ namespace ChessExerciseManagement.UI.UserControls {
         }
 
         private void Field_PieceChange(object sender, PieceEvent e) {
-            if (e.Piece == null) {
-                imageViewer.Source = null;
+            if (e.PieceController == null) {
+                ImageViewer.Source = null;
             } else {
-                imageViewer.Source = e.Piece.GetBitmapImage();
+                ImageViewer.Source = e.PieceController.GetBitmapImage();
             }
         }
 
@@ -73,21 +73,21 @@ namespace ChessExerciseManagement.UI.UserControls {
                 return;
             }
 
-            var game = TrainingWindow.Game;
-            var markedFieldControls = m_boardControl.MarkedFieldControls;
+            var gc = TrainingWindow.GameController;
+            var markedFieldControls = m_boardView.MarkedFieldControls;
 
             if (markedFieldControls.Contains(this)) {
-                var markedPiece = m_boardControl.MarkedFieldControl.m_field.Field.Piece;
-                markedPiece.SetField(m_field);
+                var markedPiece = m_boardView.MarkedFieldControl.m_fieldController.PieceController;
+                markedPiece.SetField(m_fieldController);
 
                 foreach (var fieldControl in markedFieldControls) {
                     fieldControl.BorderBrush = Brushes.Black;
                     fieldControl.BorderThickness = new Thickness(1, 1, 1, 1);
-                    m_boardControl.MarkedFieldControl = null;
+                    m_boardView.MarkedFieldControl = null;
                 }
 
                 markedFieldControls.Clear();
-                m_boardControl.MarkedFieldControl = null;
+                m_boardView.MarkedFieldControl = null;
 
                 return;
             }
@@ -95,30 +95,30 @@ namespace ChessExerciseManagement.UI.UserControls {
             foreach (var fieldControl in markedFieldControls) {
                 fieldControl.BorderBrush = Brushes.Black;
                 fieldControl.BorderThickness = new Thickness(1, 1, 1, 1);
-                m_boardControl.MarkedFieldControl = null;
+                m_boardView.MarkedFieldControl = null;
             }
 
             markedFieldControls.Clear();
 
-            var piece = m_field.Field.Piece;
-            if (piece == null || piece.Affiliation != game.WhosTurn) {
+            var pc = m_fieldController.PieceController;
+            if (pc == null || pc.Piece.Affiliation != gc.Game.WhosTurn) {
                 return;
             }
 
-            var fields = piece.GetAccessibleFields();
+            var fields = pc.GetAccessibleFields();
 
             foreach (var field in fields) {
                 var x = field.X;
                 var y = field.Y;
 
-                var control = m_boardControl.Controls[x, y];
+                var fv = m_boardView.FieldViews[x, y];
 
-                control.BorderBrush = Brushes.Red;
-                control.BorderThickness = new Thickness(3.0d);
-                markedFieldControls.Add(control);
+                fv.BorderBrush = Brushes.Red;
+                fv.BorderThickness = new Thickness(3.0d);
+                markedFieldControls.Add(fv);
             }
 
-            m_boardControl.MarkedFieldControl = this;
+            m_boardView.MarkedFieldControl = this;
         }
     }
 }

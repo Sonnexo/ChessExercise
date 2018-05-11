@@ -1,4 +1,5 @@
 ﻿using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Models.Pieces;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,23 +15,15 @@ namespace ChessExerciseManagement.Controls {
             get;
         }
 
-        public Player White {
-            get {
-                return Game.White;
-            }
+        public PlayerController White {
+            get;
+            set;
         }
 
-        public Player Black {
-            get {
-                return Game.Black;
-            }
+        public PlayerController Black {
+            get;
+            set;
         }
-
-
-        private PlayerController m_white;
-        private PlayerController m_black;
-
-
 
         public GameController() {
             SetupBoard();
@@ -44,11 +37,11 @@ namespace ChessExerciseManagement.Controls {
         private void SetupBoard() {
             BoardController = new BoardController(8, 8);
 
-            m_white = new PlayerController(PlayerAffiliation.White);
-            m_black = new PlayerController(PlayerAffiliation.Black);
+            White = new PlayerController(PlayerAffiliation.White);
+            Black = new PlayerController(PlayerAffiliation.Black);
 
-            BoardController.AddPlayer(m_white);
-            BoardController.AddPlayer(m_black);
+            BoardController.AddPlayer(White);
+            BoardController.AddPlayer(Black);
         }
 
         private void AddStandardPieces() {
@@ -60,33 +53,33 @@ namespace ChessExerciseManagement.Controls {
             LoadPosition(fenComps[0]);
 
             if (fenComps.Length > 1) {
-                WhosTurn = fenComps[1].Equals("w") ? PlayerAffiliation.White : PlayerAffiliation.Black;
+                Game.WhosTurn = fenComps[1].Equals("w") ? PlayerAffiliation.White : PlayerAffiliation.Black;
             } else {
-                WhosTurn = PlayerAffiliation.White;
+                Game.WhosTurn = PlayerAffiliation.White;
             }
 
             if (fenComps.Length > 2) {
-                White.MayCastleShort = fenComps[2].Contains("K");
-                White.MayCastleLong = fenComps[2].Contains("Q");
-                Black.MayCastleShort = fenComps[2].Contains("k");
-                White.MayCastleLong = fenComps[2].Contains("q");
+                White.Player.MayCastleShort = fenComps[2].Contains("K");
+                White.Player.MayCastleLong = fenComps[2].Contains("Q");
+                Black.Player.MayCastleShort = fenComps[2].Contains("k");
+                White.Player.MayCastleLong = fenComps[2].Contains("q");
             } else {
-                White.MayCastleShort = false;
-                White.MayCastleLong = false;
-                Black.MayCastleShort = false;
-                White.MayCastleLong = false;
+                White.Player.MayCastleShort = false;
+                White.Player.MayCastleLong = false;
+                Black.Player.MayCastleShort = false;
+                White.Player.MayCastleLong = false;
             }
 
             if (fenComps.Length > 4) {
-                HalfmovesSinceLastCaptureOrPawn = int.Parse(fenComps[4]);
+                Game.HalfmovesSinceLastCaptureOrPawn = int.Parse(fenComps[4]);
             } else {
-                HalfmovesSinceLastCaptureOrPawn = 0;
+                Game.HalfmovesSinceLastCaptureOrPawn = 0;
             }
 
             if (fenComps.Length > 5) {
-                Movecounter = int.Parse(fenComps[5]);
+                Game.Movecounter = int.Parse(fenComps[5]);
             } else {
-                Movecounter = 1;
+                Game.Movecounter = 1;
             }
         }
 
@@ -101,28 +94,28 @@ namespace ChessExerciseManagement.Controls {
                     }
 
                     var player = char.IsUpper(c) ? White : Black;
-                    var field = Board.Fields[x, y];
+                    var field = BoardController.FieldControllers[x, y];
 
-                    Piece piece = null;
+                    PieceController piece = null;
                     var tmpC = char.ToLower(c);
                     switch (tmpC) {
                         case 'r':
-                            piece = new Rook(player, Board, field);
+                            piece = new PieceController(new Rook(), player, field);
                             break;
                         case 'n':
-                            piece = new Knight(player, Board, field);
+                            piece = new PieceController(new Knight(), player, field);
                             break;
                         case 'b':
-                            piece = new Bishop(player, Board, field);
+                            piece = new PieceController(new Bishop(), player, field);
                             break;
                         case 'q':
-                            piece = new Queen(player, Board, field);
+                            piece = new PieceController(new Queen(), player, field);
                             break;
                         case 'k':
-                            piece = new King(player, Board, field);
+                            piece = new PieceController(new King(), player, field);
                             break;
                         case 'p':
-                            piece = new Pawn(player, Board, field);
+                            piece = new PieceController(new Pawn(), player, field);
                             break;
                     }
 
@@ -136,26 +129,26 @@ namespace ChessExerciseManagement.Controls {
         private void AddWhitePieces() {
             var fields = BoardController.FieldControllers;
 
-            var rook1 = new Rook(White, Board, fields[0, 0]);
-            var rook2 = new Rook(White, Board, fields[7, 0]);
+            var rook1 = new PieceController(new Rook(), White, fields[0, 0]);
+            var rook2 = new PieceController(new Rook(), White, fields[7, 0]);
 
-            var knight1 = new Knight(White, Board, fields[1, 0]);
-            var knight2 = new Knight(White, Board, fields[6, 0]);
+            var knight1 = new PieceController(new Knight(), White, fields[1, 0]);
+            var knight2 = new PieceController(new Knight(), White, fields[6, 0]);
 
-            var bishop1 = new Bishop(White, Board, fields[2, 0]);
-            var bishop2 = new Bishop(White, Board, fields[5, 0]);
+            var bishop1 = new PieceController(new Bishop(), White, fields[2, 0]);
+            var bishop2 = new PieceController(new Bishop(), White, fields[5, 0]);
 
-            var queen = new Queen(White, Board, fields[3, 0]);
-            var king = new King(White, Board, fields[4, 0]);
+            var queen = new PieceController(new Queen(), White, fields[3, 0]);
+            var king = new PieceController(new King(), White, fields[4, 0]);
 
-            var pawn1 = new Pawn(White, Board, fields[0, 1]);
-            var pawn2 = new Pawn(White, Board, fields[1, 1]);
-            var pawn3 = new Pawn(White, Board, fields[2, 1]);
-            var pawn4 = new Pawn(White, Board, fields[3, 1]);
-            var pawn5 = new Pawn(White, Board, fields[4, 1]);
-            var pawn6 = new Pawn(White, Board, fields[5, 1]);
-            var pawn7 = new Pawn(White, Board, fields[6, 1]);
-            var pawn8 = new Pawn(White, Board, fields[7, 1]);
+            var pawn1 = new PieceController(new Pawn(), White, fields[0, 1]);
+            var pawn2 = new PieceController(new Pawn(), White, fields[1, 1]);
+            var pawn3 = new PieceController(new Pawn(), White, fields[2, 1]);
+            var pawn4 = new PieceController(new Pawn(), White, fields[3, 1]);
+            var pawn5 = new PieceController(new Pawn(), White, fields[4, 1]);
+            var pawn6 = new PieceController(new Pawn(), White, fields[5, 1]);
+            var pawn7 = new PieceController(new Pawn(), White, fields[6, 1]);
+            var pawn8 = new PieceController(new Pawn(), White, fields[7, 1]);
 
             White.AddPiece(rook1);
             White.AddPiece(rook2);
@@ -176,28 +169,28 @@ namespace ChessExerciseManagement.Controls {
         }
 
         private void AddBlackPieces() {
-            var fields = Board.Fields;
+            var fields = BoardController.FieldControllers;
 
-            var rook1 = new Rook(Black, Board, fields[0, 7]);
-            var rook2 = new Rook(Black, Board, fields[7, 7]);
+            var rook1 = new PieceController(new Rook(), White, fields[0, 7]);
+            var rook2 = new PieceController(new Rook(), White, fields[7, 7]);
 
-            var knight1 = new Knight(Black, Board, fields[1, 7]);
-            var knight2 = new Knight(Black, Board, fields[6, 7]);
+            var knight1 = new PieceController(new Knight(), White, fields[1, 7]);
+            var knight2 = new PieceController(new Knight(), White, fields[6, 7]);
 
-            var bishop1 = new Bishop(Black, Board, fields[2, 7]);
-            var bishop2 = new Bishop(Black, Board, fields[5, 7]);
+            var bishop1 = new PieceController(new Bishop(), White, fields[2, 7]);
+            var bishop2 = new PieceController(new Bishop(), White, fields[5, 7]);
 
-            var queen = new Queen(Black, Board, fields[3, 7]);
-            var king = new King(Black, Board, fields[4, 7]);
+            var queen = new PieceController(new Queen(), White, fields[3, 7]);
+            var king = new PieceController(new King(), White, fields[4, 7]);
 
-            var pawn1 = new Pawn(Black, Board, fields[0, 6]);
-            var pawn2 = new Pawn(Black, Board, fields[1, 6]);
-            var pawn3 = new Pawn(Black, Board, fields[2, 6]);
-            var pawn4 = new Pawn(Black, Board, fields[3, 6]);
-            var pawn5 = new Pawn(Black, Board, fields[4, 6]);
-            var pawn6 = new Pawn(Black, Board, fields[5, 6]);
-            var pawn7 = new Pawn(Black, Board, fields[6, 6]);
-            var pawn8 = new Pawn(Black, Board, fields[7, 6]);
+            var pawn1 = new PieceController(new Pawn(), White, fields[0, 6]);
+            var pawn2 = new PieceController(new Pawn(), White, fields[1, 6]);
+            var pawn3 = new PieceController(new Pawn(), White, fields[2, 6]);
+            var pawn4 = new PieceController(new Pawn(), White, fields[3, 6]);
+            var pawn5 = new PieceController(new Pawn(), White, fields[4, 6]);
+            var pawn6 = new PieceController(new Pawn(), White, fields[5, 6]);
+            var pawn7 = new PieceController(new Pawn(), White, fields[6, 6]);
+            var pawn8 = new PieceController(new Pawn(), White, fields[7, 6]);
 
             Black.AddPiece(rook1);
             Black.AddPiece(rook2);
@@ -223,7 +216,7 @@ namespace ChessExerciseManagement.Controls {
             sb.Append(BoardController.GetFenCode(FenMode.Classical));
             sb.Append(" ");
 
-            sb.Append(WhosTurn == PlayerAffiliation.White ? 'w' : 'b');
+            sb.Append(Game.WhosTurn == PlayerAffiliation.White ? 'w' : 'b');
             sb.Append(" ");
 
             var fenWhite = White.GetFenCastle();
@@ -240,10 +233,10 @@ namespace ChessExerciseManagement.Controls {
             sb.Append("-");
             sb.Append(" ");
 
-            sb.Append(HalfmovesSinceLastCaptureOrPawn);
+            sb.Append(Game.HalfmovesSinceLastCaptureOrPawn);
             sb.Append(" ");
 
-            sb.Append(Movecounter);
+            sb.Append(Game.Movecounter);
             sb.Append(" ");
 
             return sb.ToString();

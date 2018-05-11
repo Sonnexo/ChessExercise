@@ -3,6 +3,7 @@ using System.Text;
 using System.Drawing;
 
 using ChessExerciseManagement.Models;
+using System.Collections.Generic;
 
 namespace ChessExerciseManagement.Controls {
     public class BoardController {
@@ -17,7 +18,7 @@ namespace ChessExerciseManagement.Controls {
         public FieldController[,] FieldControllers {
             private set;
             get;
-        }
+        } = new FieldController[8, 8];
 
         public BoardController(int width, int height) {
             if (width != 8 || height != 8) {
@@ -25,7 +26,7 @@ namespace ChessExerciseManagement.Controls {
             }
 
             Board = new Board(width, height);
-            
+
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     var fc = new FieldController(x, y);
@@ -60,7 +61,7 @@ namespace ChessExerciseManagement.Controls {
                     using (var graphics = Graphics.FromImage(image)) {
                         graphics.Clear(col);
 
-                        var val = field.Field.Piece?.GetBitmap();
+                        var val = field.PieceController?.GetBitmap();
                         if (val != null) {
                             graphics.DrawImage(val, new Rectangle(0, 0, 100, 100), new Rectangle(0, 0, 200, 200), GraphicsUnit.Pixel);
                         }
@@ -165,6 +166,10 @@ namespace ChessExerciseManagement.Controls {
             }
 
             return string.Empty;
+        }
+
+        public List<Field> GetAttackedFields(Player player, bool v) {
+            throw new NotImplementedException();
         }
     }
 }

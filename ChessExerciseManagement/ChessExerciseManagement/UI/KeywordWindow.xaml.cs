@@ -35,11 +35,11 @@ namespace ChessExerciseManagement.UI {
                 sb.AppendLine(key);
             }
 
-            UsedkeywordTextBox.Text = sb.ToString();
+            UsedKeywordTextBox.Text = sb.ToString();
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            var item = UsedkeywordTextBox.SelectedText;
+            var item = UsedKeywordTextBox.SelectedText;
             if (item == null || item == string.Empty) {
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using ChessExerciseManagement.Exercises;
+﻿using ChessExerciseManagement.Controls;
+using ChessExerciseManagement.Exercises;
 using ChessExerciseManagement.Models;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
         public ExploreWindow() {
             InitializeComponent();
-            Boardcontrol.SetReadonly(true);
-            var game = new Game("64-w");
-            Boardcontrol.Board = game.Board;
+            BoardView.SetReadonly(true);
+
+            var gameContorller = new GameController("64-w", FenMode.Jonas);
+            var boardController = gameContorller.BoardController;
+            BoardView.BoardController = boardController;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) {
@@ -47,11 +50,11 @@ namespace ChessExerciseManagement.UI {
                 sb.AppendLine(key);
             }
 
-            UsedkeywordTextBox.Text = sb.ToString();
+            UsedKeywordTextBox.Text = sb.ToString();
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            var item = UsedkeywordTextBox.SelectedText;
+            var item = UsedKeywordTextBox.SelectedText;
             if (item == null || item == string.Empty) {
                 return;
             }
@@ -73,9 +76,9 @@ namespace ChessExerciseManagement.UI {
             var images = new List<Bitmap>();
             foreach (string item in ExerciseListBox.SelectedItems) {
                 var fen = File.ReadAllText(item);
-                var game = new Game(fen);
-                var board = game.Board;
-                images.Add(board.GetImage());
+                var gameContorller = new GameController(fen, FenMode.Jonas);
+                var boardController = gameContorller.BoardController;
+                images.Add(boardController.GetImage());
             }
 
             var rnd = new Random();

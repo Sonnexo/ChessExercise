@@ -14,6 +14,5 @@
         <TextBox x:Name="FileTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,158,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
         <Button x:Name="ChangeButton" Click="ChangeButton_Click" Content="Change" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="255"/>
         <Button x:Name="SaveButton" Click="SaveButton_Click" IsEnabled="False" Content="Save"  HorizontalAlignment="Left" Margin="270,204,0,0" VerticalAlignment="Top" Width="252"/>
-
     </Grid>
 </Window>

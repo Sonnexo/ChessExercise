@@ -233,12 +233,14 @@ namespace ChessExerciseManagement.Controls {
             return list;
         }
 
-        public static List<Field> GetAccessibleFieldsKing(Board board, Piece piece) {
+        public static List<Field> GetAccessibleFieldsKing(BoardController boardController, Piece piece) {
             var list = new List<Field>();
 
             var player = piece.Player;
             var field = piece.Field;
             var affiliation = piece.Affiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -247,7 +249,7 @@ namespace ChessExerciseManagement.Controls {
             var dX = new[] { 0, -1, -1, -1, 0, 1, 1, 1 };
             var dY = new[] { 1, 1, 0, -1, -1, -1, 0, 1 };
 
-            var attackedFields = board.GetAttackedFields(player, true);
+            var attackedFields = boardController.GetAttackedFields(player, true);
 
             for (var i = 0; i < 8; i++) {
                 var nX = x + dX[i];

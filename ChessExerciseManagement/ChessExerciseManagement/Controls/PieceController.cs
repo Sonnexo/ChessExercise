@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 namespace ChessExerciseManagement.Controls {
     public class PieceController {
         public Piece Piece {
+            set;
             get;
         }
 
@@ -42,8 +43,10 @@ namespace ChessExerciseManagement.Controls {
             PictureHelper.AddPicture(appPath + @"PawnWhite.png", 'P');
         }
 
-        public PieceController() {
-
+        public PieceController(Piece piece, PlayerController player, FieldController field) {
+            Piece = piece;
+            piece.Field = field.Field;
+            piece.Player = player.Player;
         }
 
         public List<Field> GetAccessibleFields() {
@@ -74,6 +77,10 @@ namespace ChessExerciseManagement.Controls {
 
         public Bitmap GetBitmap() {
             return PictureHelper.GetPictureHelper(Piece.GetFenChar()).Bitmap;
+        }
+
+        internal void SetField(FieldController m_field) {
+            throw new NotImplementedException();
         }
 
         public BitmapImage GetBitmapImage() {

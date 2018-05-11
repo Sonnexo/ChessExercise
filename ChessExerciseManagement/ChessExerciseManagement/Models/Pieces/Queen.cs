@@ -1,6 +1,6 @@
 ﻿namespace ChessExerciseManagement.Models.Pieces {
     public class Queen : Piece {
-        public Queen(Player player, Field field) : base(player, field) {
+        public Queen() {
             m_key = Affiliation == PlayerAffiliation.Black ? 'q' : 'Q';
         }
     }
