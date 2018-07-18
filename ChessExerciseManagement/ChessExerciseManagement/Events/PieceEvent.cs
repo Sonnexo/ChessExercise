@@ -1,7 +1,8 @@
 ﻿using ChessExerciseManagement.Controls;
+using System;
 
 namespace ChessExerciseManagement.Events {
-    public class PieceEvent {
+    public class PieceEvent : EventArgs {
         public PieceController PieceController {
             get;
         }

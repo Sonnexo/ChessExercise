@@ -3,13 +3,13 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Drawing;
+using System.Diagnostics;
+using System.Windows.Input;
 using System.Collections.Generic;
 
 using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Controls;
 using ChessExerciseManagement.Exercises;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
@@ -33,10 +33,6 @@ namespace ChessExerciseManagement.UI {
 
             var exercises = ExerciseManager.Filter(list);
             ExerciseListBox.ItemsSource = exercises;
-        }
-
-        private void ExerciseListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -70,22 +66,43 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e) {
-            var images = new List<Bitmap>();
-            foreach (string item in ExerciseListBox.SelectedItems) {
-                var fen = File.ReadAllText(item);
-                var gameContorller = new GameController(fen, FenMode.Jonas);
-                var boardController = gameContorller.BoardController;
-                images.Add(boardController.GetImage());
+            var selectedItems = ExerciseListBox.SelectedItems;
+            var numberItems = selectedItems.Count;
+
+            if (numberItems != 4 && numberItems != 6 && numberItems != 9) {
+                MessageBox.Show("You must export 4, 6 or 9 images");
+                return;
             }
 
-            var rnd = new Random();
+            var exportedImages = new List<Bitmap>();
+            foreach (string selectedItem in selectedItems) {
+                var selectedFend = File.ReadAllText(selectedItem);
+                var gameController = new GameController(selectedFend, FenMode.Jonas);
+                var boardController = gameController.BoardController;
+                exportedImages.Add(boardController.GetImage());
+            }
+
             var filenames = new List<string>();
 
-            foreach (var img in images) {
-                var filename = @"C:\Users\fczappa\Desktop\" + rnd.Next() + ".png";
-                img.Save(filename);
+            foreach (var exportedImage in exportedImages) {
+                var filename = StorageManager.GetNewPngPath();
+                exportedImage.Save(filename);
                 filenames.Add(filename);
             }
+
+            int texfileNumber;
+
+            var texPath = StorageManager.GetNewTexPath(out texfileNumber);
+            TexGenerator.GenerateTexFile(texPath, "This is a header", "This is a task", filenames.ToArray());
+            
+            var args = @"-output-directory " + StorageManager.Outputdir + " ";
+
+            var p = Process.Start("pdflatex.exe", args + texPath);
+            p.WaitForExit();
+
+            var p2 = Process.Start(StorageManager.Outputdir + texfileNumber + ".pdf");
+            p2.WaitForExit();
+
         }
 
         private void ExerciseListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {

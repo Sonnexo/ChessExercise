@@ -135,15 +135,9 @@ namespace ChessExerciseManagement.Exercises {
             if (!Directory.Exists(m_fenFolderPath)) {
                 Directory.CreateDirectory(m_fenFolderPath);
             }
-
-            var rnd = new Random();
-
+            
             foreach (var fen in fens) {
-                string filePath;
-                do {
-                    var num = rnd.Next();
-                    filePath = m_fenFolderPath + "\\" + num.ToString();
-                } while (File.Exists(filePath));
+                string filePath = StorageManager.GetNewFenPath();
 
                 File.WriteAllText(filePath, fen);
                 AddFile(filePath, keywords);
