@@ -34,6 +34,7 @@ namespace ChessExerciseManagement.Controls {
 
         public GameController(string fen, FenMode fenMode) {
             SetupBoard();
+            LoadPosition(fen);
         }
 
         private void SetupBoard() {
