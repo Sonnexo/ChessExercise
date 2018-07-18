@@ -1,22 +1,24 @@
-﻿using ChessExerciseManagement.Models;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.UI {
     public partial class ViewWindow : Window {
-        Game game;
-
         public ViewWindow(string path) {
             InitializeComponent();
 
             var fen = File.ReadAllText(path);
 
-            game = new Game(fen);
-            boardControl.Board = game.Board;
-            boardControl.SetReadonly(true);
+            var gc = new GameController(fen, FenMode.Jonas);
+            var bc = gc.BoardController;
+
+            BoardView.ReadOnly = true;
+            BoardView.BoardController = bc;
         }
 
         private void SavePictureButton_Click(object sender, RoutedEventArgs e) {
@@ -24,10 +26,10 @@ namespace ChessExerciseManagement.UI {
             saveFileDialog.Filter = "Portable Network Graphigs (*.png)|*.png";
 
             if (saveFileDialog.ShowDialog() == true) {
-                var board = boardControl;
+                var boardView = BoardView;
 
                 var renderTargetBitmap = new RenderTargetBitmap(800, 800, 96, 96, PixelFormats.Pbgra32);
-                renderTargetBitmap.Render(board);
+                renderTargetBitmap.Render(boardView);
                 var pngImage = new PngBitmapEncoder();
                 pngImage.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
 

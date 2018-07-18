@@ -1,13 +1,14 @@
-﻿using ChessExerciseManagement.Exercises;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
+using System.Collections.Generic;
+
+using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
     public partial class KeywordWindow : Window {
         public List<string> Keywords {
-            private set;
             get;
         } = new List<string>();
 
@@ -35,11 +36,11 @@ namespace ChessExerciseManagement.UI {
                 sb.AppendLine(key);
             }
 
-            UsedkeywordTextBox.Text = sb.ToString();
+            UsedKeywordTextBox.Text = sb.ToString();
         }
 
-        private void UsedkeywordTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            var item = UsedkeywordTextBox.SelectedText;
+        private void UsedkeywordTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            var item = UsedKeywordTextBox.SelectedText;
             if (item == null || item == string.Empty) {
                 return;
             }

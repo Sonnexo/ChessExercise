@@ -3,12 +3,14 @@ using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Models.Pieces;
 
 namespace ChessExerciseManagement.Controls {
-    public static class MoveController {
-        public static List<Field> GetAccessibleFieldsPawn(Board board, Piece piece, int dY) {
+    public static class MoveHelper {
+        public static List<Field> GetAccessibleFieldsPawn(BoardController boardController, Piece piece, int dY) {
             var list = new List<Field>();
 
             var field = piece.Field;
-            var affiliation = piece.Affiliation;
+            var affiliation = piece.PlayerAffiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -25,7 +27,7 @@ namespace ChessExerciseManagement.Controls {
 
                 if (dX >= 0 && dX < board.Width) {
                     var nPiece = fields[dX, nY].Piece;
-                    if (nPiece != null && nPiece.Affiliation != affiliation) {
+                    if (nPiece != null && nPiece.PlayerAffiliation != affiliation) {
                         list.Add(fields[dX, nY]);
                     }
                 }
@@ -33,7 +35,7 @@ namespace ChessExerciseManagement.Controls {
                 dX = x + 1;
                 if (dX >= 0 && dX < board.Width) {
                     var nPiece = fields[dX, nY].Piece;
-                    if (nPiece != null && nPiece.Affiliation != affiliation) {
+                    if (nPiece != null && nPiece.PlayerAffiliation != affiliation) {
                         list.Add(fields[dX, nY]);
                     }
                 }
@@ -47,11 +49,13 @@ namespace ChessExerciseManagement.Controls {
             return list;
         }
 
-        public static List<Field> GetAccessibleFieldsRook(Board board, Piece piece) {
+        public static List<Field> GetAccessibleFieldsRook(BoardController boardController, Piece piece) {
             var list = new List<Field>();
 
             var field = piece.Field;
-            var affiliation = piece.Affiliation;
+            var affiliation = piece.PlayerAffiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -66,7 +70,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -82,7 +86,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -98,7 +102,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -114,7 +118,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -124,11 +128,13 @@ namespace ChessExerciseManagement.Controls {
             return list;
         }
 
-        public static List<Field> GetAccessibleFieldsKnight(Board board, Piece piece) {
+        public static List<Field> GetAccessibleFieldsKnight(BoardController boardController, Piece piece) {
             var list = new List<Field>();
 
             var field = piece.Field;
-            var affiliation = piece.Affiliation;
+            var affiliation = piece.PlayerAffiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -148,7 +154,7 @@ namespace ChessExerciseManagement.Controls {
                 var nField = fields[nX, nY];
                 var nPiece = nField.Piece;
 
-                if (nPiece == null || nPiece.Affiliation != affiliation) {
+                if (nPiece == null || nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
             }
@@ -156,11 +162,13 @@ namespace ChessExerciseManagement.Controls {
             return list;
         }
 
-        public static List<Field> GetAccessibleFieldsBishop(Board board, Piece piece) {
+        public static List<Field> GetAccessibleFieldsBishop(BoardController boardController, Piece piece) {
             var list = new List<Field>();
 
             var field = piece.Field;
-            var affiliation = piece.Affiliation;
+            var affiliation = piece.PlayerAffiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -175,7 +183,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -191,7 +199,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -207,7 +215,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -223,7 +231,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (nPiece.Affiliation != affiliation) {
+                if (nPiece.PlayerAffiliation != affiliation) {
                     list.Add(nField);
                 }
 
@@ -233,12 +241,14 @@ namespace ChessExerciseManagement.Controls {
             return list;
         }
 
-        public static List<Field> GetAccessibleFieldsKing(Board board, Piece piece) {
+        public static List<Field> GetAccessibleFieldsKing(BoardController boardController, Piece piece) {
             var list = new List<Field>();
 
             var player = piece.Player;
             var field = piece.Field;
-            var affiliation = piece.Affiliation;
+            var affiliation = piece.PlayerAffiliation;
+
+            var board = boardController.Board;
 
             var fields = board.Fields;
             var x = field.X;
@@ -247,7 +257,7 @@ namespace ChessExerciseManagement.Controls {
             var dX = new[] { 0, -1, -1, -1, 0, 1, 1, 1 };
             var dY = new[] { 1, 1, 0, -1, -1, -1, 0, 1 };
 
-            var attackedFields = board.GetAttackedFields(player, true);
+            var attackedFields = boardController.GetAttackedFields(player, true);
 
             for (var i = 0; i < 8; i++) {
                 var nX = x + dX[i];
@@ -260,7 +270,7 @@ namespace ChessExerciseManagement.Controls {
                 var nField = fields[nX, nY];
                 var nPiece = nField.Piece;
 
-                if (nPiece == null || nPiece.Affiliation != affiliation) {
+                if (nPiece == null || nPiece.PlayerAffiliation != affiliation) {
                     if (attackedFields.Contains(nField)) {
                         continue;
                     }

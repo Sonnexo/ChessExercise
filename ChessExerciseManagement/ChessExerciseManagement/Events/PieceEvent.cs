@@ -1,14 +1,13 @@
-﻿using ChessExerciseManagement.Models.Pieces;
+﻿using ChessExerciseManagement.Controls;
 
 namespace ChessExerciseManagement.Events {
     public class PieceEvent {
-        public Piece Piece {
-            private set;
+        public PieceController PieceController {
             get;
         }
 
-        public PieceEvent(Piece piece) {
-            Piece = piece;
+        public PieceEvent(PieceController piece) {
+            PieceController = piece;
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using ChessExerciseManagement.Exercises;
-using System.Windows;
+﻿using System.Windows;
+
+using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
     public partial class SettingsWindow : Window {

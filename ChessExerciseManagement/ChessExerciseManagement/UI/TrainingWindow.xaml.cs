@@ -1,14 +1,16 @@
-﻿using ChessExerciseManagement.Exercises;
-using ChessExerciseManagement.Models;
-using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
+using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
     public partial class TrainingWindow : Window {
-        public static Game Game {
+        public static GameController GameController {
             private set;
             get;
         }
@@ -19,13 +21,13 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SetNewGame() {
-            Game = new Game();
-            boardControl.Board = Game.Board;
+            GameController = new GameController();
+            BoardView.BoardController = GameController.BoardController;
         }
 
         private void SetNewGame(string fen) {
-            Game = new Game(fen);
-            boardControl.Board = Game.Board;
+            GameController = new GameController(fen, FenMode.Jonas);
+            BoardView.BoardController = GameController.BoardController;
         }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e) {
@@ -37,7 +39,7 @@ namespace ChessExerciseManagement.UI {
             saveFileDialog.Filter = "FEN files (*.fen)|*.fen";
 
             if (saveFileDialog.ShowDialog() == true) {
-                var fen = Game.GetFen();
+                var fen = GameController.GetFen();
                 File.WriteAllText(saveFileDialog.FileName, fen);
             }
         }
@@ -58,7 +60,7 @@ namespace ChessExerciseManagement.UI {
             saveFileDialog.Filter = "Portable Network Graphigs (*.png)|*.png";
 
             if (saveFileDialog.ShowDialog() == true) {
-                var board = boardControl;
+                var board = BoardView;
 
                 var renderTargetBitmap = new RenderTargetBitmap(800, 800, 96, 96, PixelFormats.Pbgra32);
                 renderTargetBitmap.Render(board);
@@ -78,7 +80,7 @@ namespace ChessExerciseManagement.UI {
             saveFileDialog.Filter = "FEN files (*.fen)|*.fen";
 
             if (saveFileDialog.ShowDialog() == true) {
-                var fen = Game.GetFen();
+                var fen = GameController.GetFen();
                 var filename = saveFileDialog.FileName;
                 File.WriteAllText(filename, fen);
 

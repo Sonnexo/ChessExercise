@@ -1,19 +1,24 @@
-﻿using ChessExerciseManagement.Exercises;
-using ChessExerciseManagement.Models;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Drawing;
+using System.Collections.Generic;
+
+using ChessExerciseManagement.Models;
+using ChessExerciseManagement.Controls;
+using ChessExerciseManagement.Exercises;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
         public ExploreWindow() {
             InitializeComponent();
-            Boardcontrol.SetReadonly(true);
-            var game = new Game("64-w");
-            Boardcontrol.Board = game.Board;
+            BoardView.ReadOnly = true;
+
+            var gc = new GameController("64-w", FenMode.Jonas);
+            BoardView.BoardController = gc.BoardController;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) {
@@ -31,12 +36,7 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void ExerciseListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (ExerciseListBox.SelectedItem == null) {
-                return;
-            }
 
-            var viewWindow = new ViewWindow(ExerciseListBox.SelectedItem as string);
-            viewWindow.ShowDialog();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -47,11 +47,11 @@ namespace ChessExerciseManagement.UI {
                 sb.AppendLine(key);
             }
 
-            UsedkeywordTextBox.Text = sb.ToString();
+            UsedKeywordTextBox.Text = sb.ToString();
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            var item = UsedkeywordTextBox.SelectedText;
+            var item = UsedKeywordTextBox.Text;
             if (item == null || item == string.Empty) {
                 return;
             }
@@ -73,9 +73,9 @@ namespace ChessExerciseManagement.UI {
             var images = new List<Bitmap>();
             foreach (string item in ExerciseListBox.SelectedItems) {
                 var fen = File.ReadAllText(item);
-                var game = new Game(fen);
-                var board = game.Board;
-                images.Add(board.GetImage());
+                var gameContorller = new GameController(fen, FenMode.Jonas);
+                var boardController = gameContorller.BoardController;
+                images.Add(boardController.GetImage());
             }
 
             var rnd = new Random();
@@ -86,6 +86,30 @@ namespace ChessExerciseManagement.UI {
                 img.Save(filename);
                 filenames.Add(filename);
             }
+        }
+
+        private void ExerciseListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.XButton1 == MouseButtonState.Pressed
+                || e.XButton2 == MouseButtonState.Pressed
+                || e.RightButton == MouseButtonState.Pressed
+                || e.MiddleButton == MouseButtonState.Pressed
+                || e.LeftButton != MouseButtonState.Pressed) {
+                return;
+            }
+
+            var name = (e.OriginalSource as FrameworkElement).DataContext;
+
+            if (name == null) {
+                return;
+            }
+
+            var fen = File.ReadAllText(name.ToString());
+
+            var gc = new GameController(fen, FenMode.Jonas);
+            var bc = gc.BoardController;
+
+            BoardView.ReadOnly = true;
+            BoardView.BoardController = bc;
         }
     }
 }

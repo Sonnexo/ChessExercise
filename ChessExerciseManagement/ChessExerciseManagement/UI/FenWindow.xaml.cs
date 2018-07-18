@@ -1,9 +1,10 @@
-﻿using Microsoft.Win32;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using System.Windows;
 using System.Linq;
+using System.Windows;
+using System.Collections.Generic;
+using Microsoft.Win32;
+
 using ChessExerciseManagement.Exercises;
 
 namespace ChessExerciseManagement.UI {
@@ -37,7 +38,7 @@ namespace ChessExerciseManagement.UI {
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         private bool CheckJonasFen(string fen) {

@@ -59,7 +59,12 @@
     <Compile Include="Base\BaseClass.cs" />
     <Compile Include="Base\Extensions.cs" />
     <Compile Include="Base\PictureHelper.cs" />
-    <Compile Include="Controls\MoveController.cs" />
+    <Compile Include="Controls\BoardController.cs" />
+    <Compile Include="Controls\FieldController.cs" />
+    <Compile Include="Controls\GameController.cs" />
+    <Compile Include="Controls\MoveHelper.cs" />
+    <Compile Include="Controls\PieceController.cs" />
+    <Compile Include="Controls\PlayerController.cs" />
     <Compile Include="Events\CaptureEvent.cs" />
     <Compile Include="Events\PieceEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
@@ -74,8 +79,8 @@
     <Compile Include="UI\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\UserControls\BoardControl.xaml.cs">
-      <DependentUpon>BoardControl.xaml</DependentUpon>
+    <Compile Include="UI\UserControls\BoardView.xaml.cs">
+      <DependentUpon>BoardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ExploreWindow.xaml.cs">
       <DependentUpon>ExploreWindow.xaml</DependentUpon>
@@ -83,8 +88,8 @@
     <Compile Include="UI\FenWindow.xaml.cs">
       <DependentUpon>FenWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\UserControls\FieldControl.xaml.cs">
-      <DependentUpon>FieldControl.xaml</DependentUpon>
+    <Compile Include="UI\UserControls\FieldView.xaml.cs">
+      <DependentUpon>FieldView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\KeywordWindow.xaml.cs">
       <DependentUpon>KeywordWindow.xaml</DependentUpon>
@@ -111,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\UserControls\BoardControl.xaml">
+    <Page Include="UI\UserControls\BoardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,7 +128,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\UserControls\FieldControl.xaml">
+    <Page Include="UI\UserControls\FieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

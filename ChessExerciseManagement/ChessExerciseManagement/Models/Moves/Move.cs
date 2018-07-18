@@ -5,27 +5,22 @@ using ChessExerciseManagement.Models.Pieces;
 namespace ChessExerciseManagement.Models.Moves {
     public class Move : BaseClass {
         public Field OldField {
-            private set;
             get;
         }
 
         public Field NewField {
-            private set;
             get;
         }
 
         public Piece MovedPiece {
-            private set;
             get;
         }
 
         public bool Check {
-            private set;
             get;
         }
 
         public bool Mate {
-            private set;
             get;
         }
 
@@ -67,7 +62,7 @@ namespace ChessExerciseManagement.Models.Moves {
         public override string ToString() {
             var str = string.Empty;
 
-            var c = char.ToUpper(MovedPiece.GetFenChar());
+            var c = char.ToUpper(MovedPiece.FenChar);
             if (c != 'P') {
                 str += c;
             }

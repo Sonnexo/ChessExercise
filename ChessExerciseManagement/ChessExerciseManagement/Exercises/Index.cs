@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ChessExerciseManagement.Exercises {
     public static class Index {
         private static string m_filePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ChessApplication\index.txt";
         private static string m_fenFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ChessApplication\Fen";
-        private static string indexPath;
+        private static string m_indexPath;
 
         public static string FilePath {
             get {
@@ -50,13 +50,13 @@ namespace ChessExerciseManagement.Exercises {
             }
 
             var content = File.ReadAllLines(m_filePath);
-            indexPath = AppDomain.CurrentDomain.BaseDirectory + @"Exercises\index.dat";
+            m_indexPath = AppDomain.CurrentDomain.BaseDirectory + @"Exercises\index.dat";
 
             if (content.Length == 1) {
                 var tmp = content[0];
                 if (File.Exists(tmp)) {
                     if (tmp.EndsWith(".dat")) {
-                        indexPath = tmp;
+                        m_indexPath = tmp;
                     }
                 }
             } else if (content.Length > 1) {
@@ -66,10 +66,10 @@ namespace ChessExerciseManagement.Exercises {
         }
 
         private static void SaveIndexPath() {
-            File.WriteAllText(m_filePath, indexPath);
+            File.WriteAllText(m_filePath, m_indexPath);
 
-            if (!File.Exists(indexPath)) {
-                var info = new FileInfo(indexPath);
+            if (!File.Exists(m_indexPath)) {
+                var info = new FileInfo(m_indexPath);
                 info.Directory.Create();
                 info.Create().Close();
             }
@@ -77,13 +77,13 @@ namespace ChessExerciseManagement.Exercises {
 
         private static Dictionary<string, List<string>> ProcessIndex() {
             var dict = new Dictionary<string, List<string>>();
-            if (!File.Exists(indexPath)) {
+            if (!File.Exists(m_indexPath)) {
                 return dict;
             }
 
             dict.Add(string.Empty, new List<string>());
 
-            var content = File.ReadAllLines(indexPath);
+            var content = File.ReadAllLines(m_indexPath);
 
             foreach (var exercise in content) {
                 var parts = exercise.Split(';');
@@ -128,7 +128,7 @@ namespace ChessExerciseManagement.Exercises {
             }
             sb.AppendLine();
 
-            File.AppendAllText(indexPath, sb.ToString());
+            File.AppendAllText(m_indexPath, sb.ToString());
         }
 
         public static void SaveFens(List<string> fens, List<string> keywords) {
