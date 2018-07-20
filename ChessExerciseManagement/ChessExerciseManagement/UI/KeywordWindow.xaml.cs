@@ -40,21 +40,27 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            var item = UsedKeywordTextBox.SelectedText;
+            var item = UsedKeywordTextBox.Text;
+            var pos = e.GetPosition(UsedKeywordTextBox);
+
+            var lineHeight = pos.Y / 16;
             if (item == null || item == string.Empty) {
                 return;
             }
-
+            
+            var parts = item.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var key = parts[(int)lineHeight] + Environment.NewLine;
+            
             if (KeywordTextBox.Text == string.Empty) {
-                KeywordTextBox.Text = item;
+                KeywordTextBox.Text = key;
                 return;
             }
 
-            if (!KeywordTextBox.Text.Contains(item)) {
+            if (!KeywordTextBox.Text.Contains(key)) {
                 if (!KeywordTextBox.Text.EndsWith("\r\n")) {
                     KeywordTextBox.Text += "\r\n";
                 }
-                KeywordTextBox.Text += item;
+                KeywordTextBox.Text += key;
             }
         }
     }
