@@ -73,6 +73,10 @@ namespace ChessExerciseManagement.Exercises {
             return GetNewPath(string.Empty, Index.FenFolderPath);
         }
 
+        public static string GetNewOutputPath(string path) {
+            return GetNewPath(".cee", path);
+        }
+
         private static string GetNewPath(string ending, string bPath = "") {
             int rnd;
             return GetNewPath(ending, out rnd, bPath);
@@ -93,6 +97,10 @@ namespace ChessExerciseManagement.Exercises {
         private static string GetNewPath(string ending, out int rnd, string bPath = "") {
             if (!Directory.Exists(bPath)) {
                 bPath = Basepath;
+            }
+
+            if (!bPath.EndsWith("\\")) {
+                bPath += "\\";
             }
 
             var counter = 0;

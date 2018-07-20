@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Controls;
 using ChessExerciseManagement.Exercises;
+using Microsoft.Win32;
 
 namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
@@ -36,6 +37,10 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
+            Load();
+        }
+
+        private void Load() {
             var keys = ExerciseManager.Keys;
             var sb = new StringBuilder();
 
@@ -46,7 +51,7 @@ namespace ChessExerciseManagement.UI {
             UsedKeywordTextBox.Text = sb.ToString();
         }
 
-        private void UsedkeywordTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void UsedkeywordTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             var item = UsedKeywordTextBox.Text;
             if (item == null || item == string.Empty) {
                 return;
@@ -66,6 +71,35 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e) {
+            ExerciseManager.Export(StorageManager.Basepath);
+        }
+
+        private void ExerciseListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.XButton1 == MouseButtonState.Pressed
+                || e.XButton2 == MouseButtonState.Pressed
+                || e.RightButton == MouseButtonState.Pressed
+                || e.MiddleButton == MouseButtonState.Pressed
+                || e.LeftButton != MouseButtonState.Pressed) {
+                return;
+            }
+
+            var name = (e.OriginalSource as FrameworkElement).DataContext;
+
+            if (name == null) {
+                return;
+            }
+
+            var fen = File.ReadAllText(name.ToString());
+
+            var gc = new GameController(fen, FenMode.Jonas);
+            var bc = gc.BoardController;
+
+            BoardView.ReadOnly = true;
+            BoardView.BoardController = bc;
+        }
+
+        private void ExerciseButton_Click(object sender, RoutedEventArgs e) {
+
             var selectedItems = ExerciseListBox.SelectedItems;
             var numberItems = selectedItems.Count;
 
@@ -77,7 +111,7 @@ namespace ChessExerciseManagement.UI {
             var annotiationWindow = new AnnotationWindow();
             var dialogResult = annotiationWindow.ShowDialog();
 
-            if(!dialogResult.HasValue || !dialogResult.Value) {
+            if (!dialogResult.HasValue || !dialogResult.Value) {
                 MessageBox.Show("Could not parse the annotations");
                 return;
             }
@@ -117,28 +151,17 @@ namespace ChessExerciseManagement.UI {
 
         }
 
-        private void ExerciseListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
-            if (e.XButton1 == MouseButtonState.Pressed
-                || e.XButton2 == MouseButtonState.Pressed
-                || e.RightButton == MouseButtonState.Pressed
-                || e.MiddleButton == MouseButtonState.Pressed
-                || e.LeftButton != MouseButtonState.Pressed) {
-                return;
+        private void ImportButton_Click(object sender, RoutedEventArgs e) {
+            var ofd = new OpenFileDialog();
+            ofd.InitialDirectory = StorageManager.Basepath;
+            ofd.Filter = "Chess Exercise Exports (*.cee)|*.cee|All files (*.*)|*.*";
+            ofd.FilterIndex = 1;
+            var res = ofd.ShowDialog();
+
+            if(res.HasValue && res.Value) {
+                ExerciseManager.Import(ofd.FileName);
+                Load();
             }
-
-            var name = (e.OriginalSource as FrameworkElement).DataContext;
-
-            if (name == null) {
-                return;
-            }
-
-            var fen = File.ReadAllText(name.ToString());
-
-            var gc = new GameController(fen, FenMode.Jonas);
-            var bc = gc.BoardController;
-
-            BoardView.ReadOnly = true;
-            BoardView.BoardController = bc;
         }
     }
 }
