@@ -24,7 +24,7 @@ namespace ChessExerciseManagement.UI.UserControls {
 
                 var field = fieldController.Field;
 
-                if (field.X % 2 == field.Y % 2) {
+                if (field.X % 2 != field.Y % 2) {
                     Background = OddBrush;
                 } else {
                     Background = EvenBrush;

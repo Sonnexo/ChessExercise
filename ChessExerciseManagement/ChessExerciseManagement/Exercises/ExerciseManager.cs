@@ -14,6 +14,10 @@ namespace ChessExerciseManagement.Exercises {
                 if (value != null) {
                     m_exercises = value;
 
+                    if(value.Keys.Count == 0) {
+                        value.Add(string.Empty, new List<string>());
+                    }
+
                     m_translator = new Dictionary<string, string>();
                     foreach (var val in value.Values) {
                         foreach (var path in val) {

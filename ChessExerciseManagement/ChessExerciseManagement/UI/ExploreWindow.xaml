@@ -10,7 +10,7 @@
         Title="ExploreWindow" Height="600" Width="1329" MinWidth="400" MinHeight="300">
     <Grid>
         <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="140" Click="SearchButton_Click"/>
-        <TextBox x:Name="UsedKeywordTextBox" MouseDoubleClick="UsedkeywordTextBox_MouseDoubleClick" AcceptsReturn="False" HorizontalAlignment="Left" Height="265" Margin="10,31,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="UsedKeywordTextBox" TextBlock.LineHeight="16" TextBlock.LineStackingStrategy="BlockLineHeight" MouseDoubleClick="UsedkeywordTextBox_MouseDoubleClick" AcceptsReturn="False" HorizontalAlignment="Left" Height="265" Margin="10,31,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" VerticalAlignment="Top" Width="140"/>
         <Label x:Name="UsedKeywordText" Content="Already used keywords:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="KeywordTextBox" AcceptsReturn="True" HorizontalAlignment="Left" Margin="10,301,0,35" TextWrapping="Wrap" Text="" Width="140"/>
@@ -18,6 +18,7 @@
         <Button x:Name="ExportButton" Content="Export" HorizontalAlignment="Left" Margin="155,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ExportButton_Click"/>
         <Button x:Name="ImportButton" Content="Import" HorizontalAlignment="Left" Margin="300,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ImportButton_Click"/>
         <Button x:Name="ExerciseButton" Content="Exercise" HorizontalAlignment="Left" Margin="445,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ExerciseButton_Click"/>
+        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="590,0,0,10" VerticalAlignment="Bottom" Width="140" Click="DeleteButton_Click"/>
 
         <Viewbox StretchDirection="Both" Stretch="UniformToFill" Margin="787,10,10,35">
             <UserControls:BoardView x:Name="BoardView" Height="800" Width="800"/>

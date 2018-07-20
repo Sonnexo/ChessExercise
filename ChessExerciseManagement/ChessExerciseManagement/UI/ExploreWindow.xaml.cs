@@ -49,24 +49,33 @@ namespace ChessExerciseManagement.UI {
             }
 
             UsedKeywordTextBox.Text = sb.ToString();
+            KeywordTextBox.Text = string.Empty;
+            ExerciseListBox.ItemsSource = new List<string>();
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             var item = UsedKeywordTextBox.Text;
+            var pos = e.GetPosition(UsedKeywordTextBox);
+
+            var lineHeight = pos.Y / 16;
+
             if (item == null || item == string.Empty) {
                 return;
             }
 
+            var parts = item.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var key = parts[(int)lineHeight] + Environment.NewLine;
+
             if (KeywordTextBox.Text == string.Empty) {
-                KeywordTextBox.Text = item;
+                KeywordTextBox.Text = key;
                 return;
             }
 
-            if (!KeywordTextBox.Text.Contains(item)) {
+            if (!KeywordTextBox.Text.Contains(key)) {
                 if (!KeywordTextBox.Text.EndsWith("\r\n")) {
                     KeywordTextBox.Text += "\r\n";
                 }
-                KeywordTextBox.Text += item;
+                KeywordTextBox.Text += key;
             }
         }
 
@@ -160,6 +169,15 @@ namespace ChessExerciseManagement.UI {
 
             if(res.HasValue && res.Value) {
                 ExerciseManager.Import(ofd.FileName);
+                Load();
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e) {
+            var result = MessageBox.Show("Are you sure you want to delete the whole database?", "Attention", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No);
+            if(result == MessageBoxResult.Yes) {
+                ExerciseManager.Exercises = new Dictionary<string, List<string>>();
+                Index.Clear();
                 Load();
             }
         }

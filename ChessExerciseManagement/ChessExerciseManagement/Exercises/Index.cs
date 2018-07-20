@@ -144,5 +144,12 @@ namespace ChessExerciseManagement.Exercises {
                 ExerciseManager.AddExercise(filePath, keywords);
             }
         }
+
+        public static void Clear() {
+            File.WriteAllText(m_indexPath, string.Empty);
+            foreach(var f in Directory.GetFiles(m_fenFolderPath)) {
+                File.Delete(f);
+            }
+        }
     }
 }
