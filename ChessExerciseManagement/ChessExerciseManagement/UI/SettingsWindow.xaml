@@ -4,15 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="281" Width="549">
+        Title="SettingsWindow" Height="313.148" Width="549">
     <Grid>
-        <Label x:Name="FenFolderLabel" Content="Folder to store the Fens:" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="FenFolderTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
-        <Label x:Name="FolderLabel" Content="Base folder:" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="FolderTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
-        <Label x:Name="FileLabel" Content="File to store the index path:" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="FileTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,158,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
-        <Button x:Name="ChangeButton" Click="ChangeButton_Click" Content="Change" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="255"/>
-        <Button x:Name="SaveButton" Click="SaveButton_Click" IsEnabled="False" Content="Save"  HorizontalAlignment="Left" Margin="270,204,0,0" VerticalAlignment="Top" Width="252"/>
+        <Label x:Name="FenFolderLabel" Content="Folder to store the Fens:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="FenFolderTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
+        
+        <Label x:Name="FileLabel" Content="File to store the index path:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="FileTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
+        
+        <Label x:Name="BaseFolderLabel" Content="Base folder:" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="BaseFolderTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
+        
+        <Label x:Name="DocumentFolderLabel" Content="Document folder:" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="DocumentFolderTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,218,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="512"/>
+        
+        <Button x:Name="ChangeButton" Click="ChangeButton_Click" Content="Change" HorizontalAlignment="Left" Margin="10,246,0,0" VerticalAlignment="Top" Width="255"/>
+        <Button x:Name="SaveButton" Click="SaveButton_Click" IsEnabled="False" Content="Save"  HorizontalAlignment="Left" Margin="270,246,0,0" VerticalAlignment="Top" Width="252"/>
     </Grid>
 </Window>

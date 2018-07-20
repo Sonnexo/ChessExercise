@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace ChessExerciseManagement.Exercises {
     public static class Index {
-        private static string m_filePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ChessApplication\index.txt";
-        private static string m_fenFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ChessApplication\Fen";
+        private static string m_filePath = StorageManager.AppDataPath + @"\ChessApplication\index.txt";
+        private static string m_fenFolderPath = StorageManager.AppDataPath + @"\ChessApplication\Fen";
         private static string m_indexPath;
 
         public static string FilePath {

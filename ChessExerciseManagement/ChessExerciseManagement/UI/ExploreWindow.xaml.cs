@@ -74,6 +74,18 @@ namespace ChessExerciseManagement.UI {
                 return;
             }
 
+            var annotiationWindow = new AnnotationWindow();
+            var dialogResult = annotiationWindow.ShowDialog();
+
+            if(!dialogResult.HasValue || !dialogResult.Value) {
+                MessageBox.Show("Could not parse the annotations");
+                return;
+            }
+
+            var header = annotiationWindow.Header;
+            var task = annotiationWindow.Task;
+            var captions = annotiationWindow.Captions;
+
             var exportedImages = new List<Bitmap>();
             foreach (string selectedItem in selectedItems) {
                 var selectedFend = File.ReadAllText(selectedItem);
@@ -93,8 +105,8 @@ namespace ChessExerciseManagement.UI {
             int texfileNumber;
 
             var texPath = StorageManager.GetNewTexPath(out texfileNumber);
-            TexGenerator.GenerateTexFile(texPath, "This is a header", "This is a task", filenames.ToArray());
-            
+            TexGenerator.GenerateTexFile(texPath, header, task, filenames.ToArray(), captions);
+
             var args = @"-output-directory " + StorageManager.Outputdir + " ";
 
             var p = Process.Start("pdflatex.exe", args + texPath);

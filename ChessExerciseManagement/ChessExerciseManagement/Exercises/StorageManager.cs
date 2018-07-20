@@ -5,23 +5,60 @@ namespace ChessExerciseManagement.Exercises {
     public static class StorageManager {
         private static Random random = new Random();
 
-        private static string basepath = @"C:\Users\fczappa\Desktop\";
+        public static string AppDataPath {
+            get;
+            private set;
+        }
+
+        private static string basepath;
         public static string Basepath {
             get {
                 return basepath;
             }
+            set {
+                if (Directory.Exists(value)) {
+                    if (!value.EndsWith("\\")) {
+                        value += "\\";
+                    }
+
+                    basepath = value;
+                }
+            }
         }
 
-        private static string outputdir = @"C:\Users\fczappa\Documents\";
+        private static string outputdir;
         public static string Outputdir {
             get {
                 return outputdir;
+            }
+            set {
+                if (Directory.Exists(value)) {
+                    if (!value.EndsWith("\\")) {
+                        value += "\\";
+                    }
+
+                    outputdir = value;
+                }
             }
         }
 
 
         public static void Initialize() {
+            InitializeAppDataPath();
+            InitializeBasepath();
+            InitializeOutputdir();
+        }
 
+        private static void InitializeAppDataPath() {
+            AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        }
+
+        private static void InitializeBasepath() {
+            Basepath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        }
+
+        private static void InitializeOutputdir() {
+            Outputdir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
         public static string GetNewTexPath() {

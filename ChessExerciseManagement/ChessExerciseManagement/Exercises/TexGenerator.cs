@@ -4,9 +4,15 @@ using System.Text;
 
 namespace ChessExerciseManagement.Exercises {
     public static class TexGenerator {
-        public static void GenerateTexFile(string path, string header, string task, string[] imagePaths) {
+        public static void GenerateTexFile(string path, string header, string task, string[] imagePaths, string[] exerciseComments) {
             if (File.Exists(path)) {
                 throw new Exception("File already found at: " + path);
+            }
+
+            if (header == null || task == null
+                || imagePaths == null || exerciseComments == null
+                || imagePaths.Length != exerciseComments.Length) {
+                throw new Exception("No valid meta data");
             }
 
             int rows, columns;
