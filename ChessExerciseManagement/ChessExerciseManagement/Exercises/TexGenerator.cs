@@ -67,10 +67,8 @@ namespace ChessExerciseManagement.Exercises {
 
             sb.AppendLine(@"\end{document}");
 
-            using (var fs = File.Create(path)) {
-                using (var sw = new StreamWriter(fs)) {
-                    sw.Write(sb.ToString());
-                }
+            using (var sw = new StreamWriter(File.Create(path))) {
+                sw.Write(sb.ToString());
             }
         }
     }

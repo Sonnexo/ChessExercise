@@ -20,10 +20,9 @@ namespace ChessExerciseManagement.UI {
             var listOfIllegalFens = new List<int>();
 
             for (var i = 0; i < lines.Length; i++) {
-                var standardFenFlag = CheckStandardFen(lines[i]);
                 var jonasFenFlag = CheckJonasFen(lines[i]);
 
-                if (!(standardFenFlag || jonasFenFlag)) {
+                if (!jonasFenFlag) {
                     listOfIllegalFens.Add(i);
                 }
             }
@@ -31,14 +30,6 @@ namespace ChessExerciseManagement.UI {
             foreach (var failedNumber in listOfIllegalFens) {
                 MessageBox.Show("FEN in line " + (failedNumber + 1) + " could not be parsed.");
             }
-        }
-
-        private bool CheckStandardFen(string fen) {
-            if (fen == null || fen.Length == 0) {
-                return false;
-            }
-
-            return false;
         }
 
         private bool CheckJonasFen(string fen) {
@@ -131,8 +122,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SaveFenButton_Click(object sender, RoutedEventArgs e) {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "FEN files (*.fen)|*.fen";
+            var saveFileDialog = new SaveFileDialog {
+                Filter = "FEN files (*.fen)|*.fen"
+            };
 
             if (saveFileDialog.ShowDialog() == true) {
                 var fen = FenTextBox.Text;

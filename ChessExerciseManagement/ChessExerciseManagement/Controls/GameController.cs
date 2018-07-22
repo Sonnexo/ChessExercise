@@ -32,7 +32,7 @@ namespace ChessExerciseManagement.Controls {
             AddStandardPieces();
         }
 
-        public GameController(string fen, FenMode fenMode) {
+        public GameController(string fen) {
             SetupBoard();
             LoadPosition(fen);
         }
@@ -275,8 +275,7 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                int dummy;
-                if (int.TryParse(c.ToString(), out dummy)) {
+                if (int.TryParse(c.ToString(), out int dummy)) {
                     tmpCounter *= 10;
                     tmpCounter += dummy;
                 } else {
@@ -296,8 +295,6 @@ namespace ChessExerciseManagement.Controls {
                 for (var i = 0; i < tmpCounter; i++) {
                     sb.Append('-');
                 }
-
-                tmpCounter = 0;
             }
 
             var code = sb.ToString();
@@ -322,9 +319,8 @@ namespace ChessExerciseManagement.Controls {
                 for (var x = 0; x < 8; x++) {
 
                     var c = ranks[7 - y][pointer];
-                    byte b;
 
-                    if (byte.TryParse(c.ToString(), out b)) {
+                    if (byte.TryParse(c.ToString(), out byte b)) {
                         var oldX = x;
                         for (var i = oldX; i < b + oldX; i++) {
                             fieldcodes[i, y] = '-';

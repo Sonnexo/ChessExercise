@@ -14,7 +14,7 @@ namespace ChessExerciseManagement.UI {
 
             var fen = File.ReadAllText(path);
 
-            var gc = new GameController(fen, FenMode.Jonas);
+            var gc = new GameController(fen);
             var bc = gc.BoardController;
 
             BoardView.ReadOnly = true;
@@ -22,8 +22,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SavePictureButton_Click(object sender, RoutedEventArgs e) {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Portable Network Graphigs (*.png)|*.png";
+            var saveFileDialog = new SaveFileDialog {
+                Filter = "Portable Network Graphigs (*.png)|*.png"
+            };
 
             if (saveFileDialog.ShowDialog() == true) {
                 var boardView = BoardView;

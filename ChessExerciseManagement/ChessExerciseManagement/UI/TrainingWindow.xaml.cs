@@ -26,7 +26,7 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SetNewGame(string fen) {
-            GameController = new GameController(fen, FenMode.Jonas);
+            GameController = new GameController(fen);
             BoardView.BoardController = GameController.BoardController;
         }
 
@@ -35,8 +35,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SaveFenButton_Click(object sender, RoutedEventArgs e) {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "FEN files (*.fen)|*.fen";
+            var saveFileDialog = new SaveFileDialog {
+                Filter = "FEN files (*.fen)|*.fen"
+            };
 
             if (saveFileDialog.ShowDialog() == true) {
                 var fen = GameController.GetFen();
@@ -45,8 +46,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void LoadFenButton_Click(object sender, RoutedEventArgs e) {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "FEN files (*.fen)|*.fen";
+            var openFileDialog = new OpenFileDialog {
+                Filter = "FEN files (*.fen)|*.fen"
+            };
             if (openFileDialog.ShowDialog() == true) {
                 var fenPath = openFileDialog.FileName;
                 var fen = File.ReadAllText(fenPath);
@@ -56,8 +58,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SavePictureButton_Click(object sender, RoutedEventArgs e) {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Portable Network Graphigs (*.png)|*.png";
+            var saveFileDialog = new SaveFileDialog {
+                Filter = "Portable Network Graphigs (*.png)|*.png"
+            };
 
             if (saveFileDialog.ShowDialog() == true) {
                 var board = BoardView;
@@ -76,8 +79,9 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SaveExerciseButton_Click(object sender, RoutedEventArgs e) {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "FEN files (*.fen)|*.fen";
+            var saveFileDialog = new SaveFileDialog {
+                Filter = "FEN files (*.fen)|*.fen"
+            };
 
             if (saveFileDialog.ShowDialog() == true) {
                 var fen = GameController.GetFen();

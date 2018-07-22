@@ -18,7 +18,7 @@ namespace ChessExerciseManagement.UI {
             InitializeComponent();
             BoardView.ReadOnly = true;
 
-            var gc = new GameController("64-w", FenMode.Jonas);
+            var gc = new GameController("64-w");
             BoardView.BoardController = gc.BoardController;
         }
 
@@ -100,7 +100,7 @@ namespace ChessExerciseManagement.UI {
 
             var fen = File.ReadAllText(name.ToString());
 
-            var gc = new GameController(fen, FenMode.Jonas);
+            var gc = new GameController(fen);
             var bc = gc.BoardController;
 
             BoardView.ReadOnly = true;
@@ -132,7 +132,7 @@ namespace ChessExerciseManagement.UI {
             var exportedImages = new List<Bitmap>();
             foreach (string selectedItem in selectedItems) {
                 var selectedFend = File.ReadAllText(selectedItem);
-                var gameController = new GameController(selectedFend, FenMode.Jonas);
+                var gameController = new GameController(selectedFend);
                 var boardController = gameController.BoardController;
                 exportedImages.Add(boardController.GetImage());
             }
@@ -161,10 +161,11 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e) {
-            var ofd = new OpenFileDialog();
-            ofd.InitialDirectory = StorageManager.Basepath;
-            ofd.Filter = "Chess Exercise Exports (*.cee)|*.cee|All files (*.*)|*.*";
-            ofd.FilterIndex = 1;
+            var ofd = new OpenFileDialog {
+                InitialDirectory = StorageManager.Basepath,
+                Filter = "Chess Exercise Exports (*.cee)|*.cee|All files (*.*)|*.*",
+                FilterIndex = 1
+            };
             var res = ofd.ShowDialog();
 
             if(res.HasValue && res.Value) {

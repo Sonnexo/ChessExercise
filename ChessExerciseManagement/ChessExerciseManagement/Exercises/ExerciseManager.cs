@@ -14,7 +14,7 @@ namespace ChessExerciseManagement.Exercises {
                 if (value != null) {
                     m_exercises = value;
 
-                    if(value.Keys.Count == 0) {
+                    if (value.Keys.Count == 0) {
                         value.Add(string.Empty, new List<string>());
                     }
 
@@ -104,31 +104,29 @@ namespace ChessExerciseManagement.Exercises {
                 }
             }
 
-            using (var file = File.Create(filePath)) {
-                using (var writer = new StreamWriter(file)) {
-                    writer.WriteLine("keys:");
+            using (var writer = new StreamWriter(File.Create(filePath))) {
+                writer.WriteLine("keys:");
 
-                    for (var i = 0; i < keys.Length; i++) {
-                        var key = keys[i];
-                        writer.WriteLine(i + ":" + key);
-                    }
-
-                    writer.WriteLine();
-                    writer.WriteLine("fens:");
-
-                    foreach (var key in dict.Keys) {
-
-                        var l = File.ReadAllText(key);
-
-                        writer.Write(l + ": ");
-                        foreach (var ind in dict[key]) {
-                            writer.Write(ind + ",");
-                        }
-                        writer.WriteLine();
-                    }
-
-                    writer.Flush();
+                for (var i = 0; i < keys.Length; i++) {
+                    var key = keys[i];
+                    writer.WriteLine(i + ":" + key);
                 }
+
+                writer.WriteLine();
+                writer.WriteLine("fens:");
+
+                foreach (var key in dict.Keys) {
+
+                    var l = File.ReadAllText(key);
+
+                    writer.Write(l + ": ");
+                    foreach (var ind in dict[key]) {
+                        writer.Write(ind + ",");
+                    }
+                    writer.WriteLine();
+                }
+
+                writer.Flush();
             }
         }
 
@@ -208,8 +206,8 @@ namespace ChessExerciseManagement.Exercises {
                         existingList.Add(newItem);
 
                         var keywords = new List<string>();
-                        foreach(var k in dict.Keys) {
-                            if(dict[k].Contains(newItem)) {
+                        foreach (var k in dict.Keys) {
+                            if (dict[k].Contains(newItem)) {
                                 keywords.Add(k);
                             }
                         }
