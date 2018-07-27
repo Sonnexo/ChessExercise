@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Base\BaseClass.cs" />
     <Compile Include="Base\Extensions.cs" />
+    <Compile Include="Base\Fen.cs" />
     <Compile Include="Base\PictureHelper.cs" />
     <Compile Include="Controls\BoardController.cs" />
     <Compile Include="Controls\FieldController.cs" />
@@ -89,6 +90,9 @@
     </Compile>
     <Compile Include="UI\CheckWindow.xaml.cs">
       <DependentUpon>CheckWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EditWindow.xaml.cs">
+      <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -131,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\CheckWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

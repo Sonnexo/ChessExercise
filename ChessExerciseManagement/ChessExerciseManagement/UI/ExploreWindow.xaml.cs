@@ -176,9 +176,21 @@ namespace ChessExerciseManagement.UI {
 
         private void EditItem_Click(object sender, RoutedEventArgs e) {
             var mi = sender as MenuItem;
-            var fen = mi.DataContext.ToString();
+            var fenPath = mi.DataContext.ToString();
+            var fen = File.ReadAllText(fenPath);
 
-            MessageBox.Show("Currently not able to edit " + fen);
+            var ew = new EditWindow(fen);
+            ew.ShowDialog();
+
+            var newFen = ew.ReturnFen;
+            if (newFen == null) {
+                return;
+            }
+
+            Index.EditFile(fenPath, newFen);
+
+            var gc = new GameController(newFen);
+            BoardView.BoardController = gc.BoardController;
         }
 
         private void ExerciseButton_Click(object sender, RoutedEventArgs e) {

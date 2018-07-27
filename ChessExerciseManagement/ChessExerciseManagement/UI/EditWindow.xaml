@@ -1,0 +1,18 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessExerciseManagement.UI"
+        xmlns:UserControls="clr-namespace:ChessExerciseManagement.UI.UserControls" x:Class="ChessExerciseManagement.UI.EditWindow"
+        mc:Ignorable="d"
+        Title="EditWindow" Height="906" Width="836">
+    <Grid>
+
+        <UserControls:BoardView x:Name="BoardView" HorizontalAlignment="Left" Margin="10,10,0,-17" VerticalAlignment="Top"/>
+        <TextBox x:Name="FenTextBox" TextChanged="FenTextBox_TextChanged" HorizontalAlignment="Left" Height="23" Margin="10,815,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800"/>
+        <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" HorizontalAlignment="Left" Margin="10,843,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="AbortButton" Content="Abort" Click="AbortButton_Click" HorizontalAlignment="Left" Margin="90,843,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

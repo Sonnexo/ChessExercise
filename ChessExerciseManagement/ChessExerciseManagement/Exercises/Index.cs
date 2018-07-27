@@ -155,5 +155,10 @@ namespace ChessExerciseManagement.Exercises {
         public static void DeleteFile(string path) {
             File.Delete(path);
         }
+
+        public static void EditFile(string fen, string newFen) {
+            File.Delete(fen);
+            File.WriteAllText(fen, newFen);
+        }
     }
 }
