@@ -55,12 +55,12 @@ namespace ChessExerciseManagement.Exercises {
             if (content.Length == 1) {
                 var tmp = content[0];
                 if (File.Exists(tmp)) {
-                    if (tmp.EndsWith(".dat")) {
+                    if (tmp.EndsWith(".dat", StringComparison.InvariantCultureIgnoreCase)) {
                         m_indexPath = tmp;
                     }
                 }
             } else if (content.Length > 1) {
-                throw new Exception("Your index file is corrupted. Please make sure the file: " + m_filePath
+                throw new FileLoadException("Your index file is corrupted. Please make sure the file: " + m_filePath
                     + " only contains a single line");
             }
         }
@@ -150,6 +150,10 @@ namespace ChessExerciseManagement.Exercises {
             foreach(var f in Directory.GetFiles(m_fenFolderPath)) {
                 File.Delete(f);
             }
+        }
+
+        public static void DeleteFile(string path) {
+            File.Delete(path);
         }
     }
 }

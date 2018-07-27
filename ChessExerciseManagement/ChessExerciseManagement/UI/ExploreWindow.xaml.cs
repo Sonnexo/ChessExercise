@@ -11,6 +11,7 @@ using ChessExerciseManagement.Models;
 using ChessExerciseManagement.Controls;
 using ChessExerciseManagement.Exercises;
 using Microsoft.Win32;
+using System.Windows.Controls;
 
 namespace ChessExerciseManagement.UI {
     public partial class ExploreWindow : Window {
@@ -23,6 +24,16 @@ namespace ChessExerciseManagement.UI {
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) {
+            Search();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            Load();
+        }
+
+        private void Search() {
+            ExerciseListBox.ItemsSource = new List<string>();
+
             var text = KeywordTextBox.Text;
             var keywords = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -36,10 +47,6 @@ namespace ChessExerciseManagement.UI {
             ExerciseListBox.ItemsSource = exercises;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
-            Load();
-        }
-
         private void Load() {
             var keys = ExerciseManager.Keys;
             var sb = new StringBuilder();
@@ -51,6 +58,15 @@ namespace ChessExerciseManagement.UI {
             UsedKeywordTextBox.Text = sb.ToString();
             KeywordTextBox.Text = string.Empty;
             ExerciseListBox.ItemsSource = new List<string>();
+            ClearBoard();
+        }
+
+        private void ClearBoard() {
+            var gc = new GameController("64-w");
+            var bc = gc.BoardController;
+
+            BoardView.ReadOnly = true;
+            BoardView.BoardController = bc;
         }
 
         private void UsedkeywordTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
@@ -59,20 +75,29 @@ namespace ChessExerciseManagement.UI {
 
             var lineHeight = pos.Y / 16;
 
-            if (item == null || item == string.Empty) {
+            if (string.IsNullOrEmpty(item)) {
                 return;
             }
 
             var parts = item.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            var key = parts[(int)lineHeight] + Environment.NewLine;
+            string key;
 
-            if (KeywordTextBox.Text == string.Empty) {
+            try {
+                key = parts[(int)lineHeight];
+            } catch (Exception) {
+                MessageBox.Show("Your click was not perfect, please try again.");
+                return;
+            }
+
+            key = key + Environment.NewLine;
+
+            if (string.IsNullOrEmpty(KeywordTextBox.Text)) {
                 KeywordTextBox.Text = key;
                 return;
             }
 
             if (!KeywordTextBox.Text.Contains(key)) {
-                if (!KeywordTextBox.Text.EndsWith("\r\n")) {
+                if (!KeywordTextBox.Text.EndsWith("\r\n", StringComparison.InvariantCultureIgnoreCase)) {
                     KeywordTextBox.Text += "\r\n";
                 }
                 KeywordTextBox.Text += key;
@@ -86,12 +111,22 @@ namespace ChessExerciseManagement.UI {
         private void ExerciseListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
             if (e.XButton1 == MouseButtonState.Pressed
                 || e.XButton2 == MouseButtonState.Pressed
-                || e.RightButton == MouseButtonState.Pressed
-                || e.MiddleButton == MouseButtonState.Pressed
-                || e.LeftButton != MouseButtonState.Pressed) {
+                || e.MiddleButton == MouseButtonState.Pressed) {
                 return;
             }
 
+            if (e.RightButton == MouseButtonState.Pressed && e.LeftButton != MouseButtonState.Pressed) {
+                HandleRightClick(sender, e);
+                return;
+            }
+
+            if (e.RightButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed) {
+                HandleLeftClick(sender, e);
+                return;
+            }
+        }
+
+        private void HandleLeftClick(object sender, MouseButtonEventArgs e) {
             var name = (e.OriginalSource as FrameworkElement).DataContext;
 
             if (name == null) {
@@ -105,6 +140,45 @@ namespace ChessExerciseManagement.UI {
 
             BoardView.ReadOnly = true;
             BoardView.BoardController = bc;
+        }
+
+        private void HandleRightClick(object sender, MouseButtonEventArgs e) {
+            var fe = (e.OriginalSource as FrameworkElement);
+            var name = fe.DataContext;
+
+            if (name == null) {
+                return;
+            }
+
+            var cm = new ContextMenu();
+
+            var editItem = new MenuItem();
+            editItem.Header = "Edit";
+            editItem.Click += EditItem_Click;
+
+            var deleteItem = new MenuItem();
+            deleteItem.Header = "Delete";
+            deleteItem.Click += DeleteItem_Click;
+
+            cm.Items.Add(editItem);
+            cm.Items.Add(deleteItem);
+            fe.ContextMenu = cm;
+        }
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e) {
+            var mi = sender as MenuItem;
+            var fen = mi.DataContext.ToString();
+
+            ExerciseManager.DeleteExercise(fen);
+            Search();
+            ClearBoard();
+        }
+
+        private void EditItem_Click(object sender, RoutedEventArgs e) {
+            var mi = sender as MenuItem;
+            var fen = mi.DataContext.ToString();
+
+            MessageBox.Show("Currently not able to edit " + fen);
         }
 
         private void ExerciseButton_Click(object sender, RoutedEventArgs e) {
@@ -168,15 +242,16 @@ namespace ChessExerciseManagement.UI {
             };
             var res = ofd.ShowDialog();
 
-            if(res.HasValue && res.Value) {
+            if (res.HasValue && res.Value) {
                 ExerciseManager.Import(ofd.FileName);
                 Load();
             }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e) {
-            var result = MessageBox.Show("Are you sure you want to delete the whole database?", "Attention", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No);
-            if(result == MessageBoxResult.Yes) {
+            var result = MessageBox.Show("Are you sure you want to delete the whole database?",
+                "Attention", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes) {
                 ExerciseManager.Exercises = new Dictionary<string, List<string>>();
                 Index.Clear();
                 Load();

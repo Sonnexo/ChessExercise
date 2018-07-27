@@ -2,14 +2,14 @@
 using ChessExerciseManagement.Models.Moves;
 
 namespace ChessExerciseManagement.Events {
-    public class MoveEvent : EventArgs {
+    public class MoveEventArgs : EventArgs {
         public Move Move {
             get;
         }
 
-        public MoveEvent(Move move) {
+        public MoveEventArgs(Move move) {
             if (move == null) {
-                throw new ArgumentNullException("oldField must not be null");
+                throw new ArgumentNullException("move must not be null");
             }
 
             Move = move;

@@ -8,15 +8,20 @@
         }
 
         public bool Equals(BaseClass other) {
+            if (other == null) {
+                return false;
+            }
+
             return other.m_id == m_id;
         }
 
         public override bool Equals(object obj) {
-            if (!(obj is BaseClass)) {
+            var bc = obj as BaseClass;
+            if (bc == null) {
                 return false;
             }
 
-            return Equals(obj as BaseClass);
+            return Equals(bc);
         }
 
         public override int GetHashCode() {

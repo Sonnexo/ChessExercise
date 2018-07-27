@@ -44,20 +44,29 @@ namespace ChessExerciseManagement.UI {
             var pos = e.GetPosition(UsedKeywordTextBox);
 
             var lineHeight = pos.Y / 16;
-            if (item == null || item == string.Empty) {
+            if (string.IsNullOrEmpty(item)) {
                 return;
             }
             
             var parts = item.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            var key = parts[(int)lineHeight] + Environment.NewLine;
-            
-            if (KeywordTextBox.Text == string.Empty) {
+            string key;
+
+            try {
+                key = parts[(int)lineHeight];
+            } catch (Exception) {
+                MessageBox.Show("Your click was not perfect, please try again.");
+                return;
+            }
+
+            key = key + Environment.NewLine;
+
+            if (string.IsNullOrEmpty(KeywordTextBox.Text)) {
                 KeywordTextBox.Text = key;
                 return;
             }
 
             if (!KeywordTextBox.Text.Contains(key)) {
-                if (!KeywordTextBox.Text.EndsWith("\r\n")) {
+                if (!KeywordTextBox.Text.EndsWith("\r\n", StringComparison.InvariantCultureIgnoreCase)) {
                     KeywordTextBox.Text += "\r\n";
                 }
                 KeywordTextBox.Text += key;

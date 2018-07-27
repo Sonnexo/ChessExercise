@@ -4,11 +4,11 @@ using ChessExerciseManagement.Models.Pieces;
 
 namespace ChessExerciseManagement.Models.Moves {
     public class Move : BaseClass {
-        public Field OldField {
+        public Field Oldfield {
             get;
         }
 
-        public Field NewField {
+        public Field Newfield {
             get;
         }
 
@@ -51,8 +51,8 @@ namespace ChessExerciseManagement.Models.Moves {
                 throw new ArgumentException("There cannot be a mate if it is not check");
             }
 
-            OldField = oldField;
-            NewField = newField;
+            Oldfield = oldField;
+            Newfield = newField;
             MovedPiece = movedPiece;
 
             Check = check;
@@ -62,14 +62,14 @@ namespace ChessExerciseManagement.Models.Moves {
         public override string ToString() {
             var str = string.Empty;
 
-            var c = char.ToUpper(MovedPiece.FenChar);
+            var c = char.ToUpper(MovedPiece.FenChar, System.Globalization.CultureInfo.InvariantCulture);
             if (c != 'P') {
                 str += c;
             }
 
-            var nX = NewField.X;
-            var nY = NewField.Y;
-            var oX = OldField.X;
+            var nX = Newfield.X;
+            var nY = Newfield.Y;
+            var oX = Oldfield.X;
 
             str += c.Load(nX);
             str += (nY + 1);

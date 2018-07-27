@@ -1,7 +1,7 @@
 ﻿namespace ChessExerciseManagement.Base {
     public static class Extensions {
-        public static int GetRow(this char c) {
-            switch (c) {
+        public static int GetRow(this char column) {
+            switch (column) {
                 case 'a':
                     return 0;
                 case 'b':
@@ -23,7 +23,7 @@
             return -1;
         }
 
-        public static char Load(this char c, int row) {
+        public static char Load(this char column, int row) {
             switch (row) {
                 case 0:
                     return 'a';

@@ -257,7 +257,7 @@ namespace ChessExerciseManagement.Controls {
             var dX = new[] { 0, -1, -1, -1, 0, 1, 1, 1 };
             var dY = new[] { 1, 1, 0, -1, -1, -1, 0, 1 };
 
-            var attackedFields = boardController.GetAttackedFields(player, true);
+            var attackedFields = BoardController.GetAttackedFields(player, true);
 
             for (var i = 0; i < 8; i++) {
                 var nX = x + dX[i];

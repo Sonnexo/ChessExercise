@@ -11,9 +11,6 @@ namespace ChessExerciseManagement.UI.UserControls {
     public partial class FieldView : UserControl {
         private FieldController fieldController;
         public FieldController FieldController {
-            private get {
-                return fieldController;
-            }
             set {
                 if (fieldController != null) {
                     fieldController.PieceChange -= Field_PieceChange;
@@ -54,12 +51,12 @@ namespace ChessExerciseManagement.UI.UserControls {
         }
 
         public BoardView BoardView {
-            private get;
+            get;
             set;
         }
 
         public bool ReadOnly {
-            private get;
+            get;
             set;
         }
 
@@ -77,7 +74,7 @@ namespace ChessExerciseManagement.UI.UserControls {
             InitializeComponent();
         }
 
-        private void Field_PieceChange(object sender, PieceEvent e) {
+        private void Field_PieceChange(object sender, PieceEventArgs e) {
             if (e.PieceController == null) {
                 ImageViewer.Source = null;
             } else {

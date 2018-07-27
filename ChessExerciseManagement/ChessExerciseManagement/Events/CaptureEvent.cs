@@ -1,8 +1,8 @@
 ﻿using ChessExerciseManagement.Models.Moves;
 
 namespace ChessExerciseManagement.Events {
-    public class CaptureEvent : MoveEvent {
-        public CaptureEvent(CaptureMove captureMove)
+    public class CaptureEventArgs : MoveEventArgs {
+        public CaptureEventArgs(CaptureMove captureMove)
             : base(captureMove) {
         }
     }

@@ -11,12 +11,10 @@ namespace ChessExerciseManagement.Controls {
         private static Color blackColor = Color.LightGray;
 
         public Board Board {
-            private set;
             get;
         }
 
         public FieldController[,] FieldControllers {
-            private set;
             get;
         } = new FieldController[8, 8];
 
@@ -52,7 +50,7 @@ namespace ChessExerciseManagement.Controls {
 
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
-                    var flag = x % 2 == y % 2;
+                    var flag = x % 2 != y % 2;
                     var col = flag ? whiteColor : blackColor;
                     var field = FieldControllers[x, y];
 
@@ -75,7 +73,7 @@ namespace ChessExerciseManagement.Controls {
             return images;
         }
 
-        private Bitmap MergePictures(Image[,] images) {
+        private static Bitmap MergePictures(Image[,] images) {
             var outputBitmap = new Bitmap(800, 800, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (var graphics = Graphics.FromImage(outputBitmap)) {
                 for (var i = 0; i < 8; i++) {
@@ -168,7 +166,7 @@ namespace ChessExerciseManagement.Controls {
             return string.Empty;
         }
 
-        public List<Field> GetAttackedFields(Player player, bool v) {
+        public static List<Field> GetAttackedFields(Player player, bool v) {
             throw new NotImplementedException();
         }
     }

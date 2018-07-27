@@ -6,13 +6,13 @@ namespace ChessExerciseManagement.Exercises {
     public static class TexGenerator {
         public static void GenerateTexFile(string path, string header, string task, string[] imagePaths, string[] exerciseComments) {
             if (File.Exists(path)) {
-                throw new Exception("File already found at: " + path);
+                throw new FileLoadException("File already found at: " + path);
             }
 
             if (header == null || task == null
                 || imagePaths == null || exerciseComments == null
                 || imagePaths.Length != exerciseComments.Length) {
-                throw new Exception("No valid meta data");
+                throw new ArgumentException("No valid meta data");
             }
 
             int rows, columns;
@@ -35,7 +35,7 @@ namespace ChessExerciseManagement.Exercises {
                     imageWidth = 0.31;
                     break;
                 default:
-                    throw new Exception("Cannot process " + imagePaths.Length + " images.");
+                    throw new ArgumentException("Cannot process " + imagePaths.Length + " images.");
             }
 
             var sb = new StringBuilder();

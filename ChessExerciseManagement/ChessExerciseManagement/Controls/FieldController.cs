@@ -8,7 +8,7 @@ namespace ChessExerciseManagement.Controls {
         }
 
         public event PieceEventHandler PieceChange;
-        public delegate void PieceEventHandler(object sender, PieceEvent e);
+        public delegate void PieceEventHandler(object sender, PieceEventArgs e);
 
         private PieceController m_pieceController;
         public PieceController PieceController {
@@ -16,7 +16,7 @@ namespace ChessExerciseManagement.Controls {
                 m_pieceController = value;
                 Field.Piece = m_pieceController?.Piece;
 
-                PieceChange?.Invoke(this, new PieceEvent(m_pieceController));
+                PieceChange?.Invoke(this, new PieceEventArgs(m_pieceController));
             }
             get {
                 return m_pieceController;

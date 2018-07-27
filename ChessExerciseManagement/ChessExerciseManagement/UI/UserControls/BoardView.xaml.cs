@@ -7,14 +7,11 @@ namespace ChessExerciseManagement.UI.UserControls {
     public partial class BoardView : UserControl {
         public readonly FieldView[,] FieldViews;
 
-        public readonly List<FieldView> MarkedFieldControls;
+        public List<FieldView> MarkedFieldControls;
         public FieldView MarkedFieldControl;
 
         private bool m_readonly;
         public bool ReadOnly {
-            private get {
-                return m_readonly;
-            }
             set {
                 m_readonly = value;
                 foreach (var view in FieldViews) {

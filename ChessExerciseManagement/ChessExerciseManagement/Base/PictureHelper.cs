@@ -30,9 +30,10 @@ namespace ChessExerciseManagement.Base {
 
         public void Dispose() {
             Dispose(true);
+            GC.SuppressFinalize(true);
         }
 
-        protected virtual void Dispose(bool f) {
+        protected virtual void Dispose(bool flag) {
             m_bitmap.Dispose();
         }
     }

@@ -2,12 +2,12 @@
 using System;
 
 namespace ChessExerciseManagement.Events {
-    public class PieceEvent : EventArgs {
+    public class PieceEventArgs : EventArgs {
         public PieceController PieceController {
             get;
         }
 
-        public PieceEvent(PieceController piece) {
+        public PieceEventArgs(PieceController piece) {
             PieceController = piece;
         }
     }

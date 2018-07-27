@@ -14,7 +14,7 @@
         <Label x:Name="UsedKeywordText" Content="Already used keywords:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="KeywordTextBox" AcceptsReturn="True" HorizontalAlignment="Left" Margin="10,301,0,35" TextWrapping="Wrap" Text="" Width="140"/>
-        <ListBox x:Name="ExerciseListBox" PreviewMouseDown="ExerciseListBox_PreviewMouseDown" Margin="155,10,539,35" SelectionMode="Multiple" />
+        <ListBox x:Name="ExerciseListBox" PreviewMouseDown="ExerciseListBox_PreviewMouseDown" Margin="155,10,539,35" SelectionMode="Multiple"/>
         <Button x:Name="ExportButton" Content="Export" HorizontalAlignment="Left" Margin="155,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ExportButton_Click"/>
         <Button x:Name="ImportButton" Content="Import" HorizontalAlignment="Left" Margin="300,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ImportButton_Click"/>
         <Button x:Name="ExerciseButton" Content="Exercise" HorizontalAlignment="Left" Margin="445,0,0,10" VerticalAlignment="Bottom" Width="140" Click="ExerciseButton_Click"/>

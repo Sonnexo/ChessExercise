@@ -54,40 +54,40 @@ namespace ChessExerciseManagement.Controls {
             AddBlackPieces();
         }
 
-        private void ParseFen(string fen) {
-            var fenComps = fen.Split(' ');
-            LoadPosition(fenComps[0]);
+        //private void ParseFen(string fen) {
+        //    var fenComps = fen.Split(' ');
+        //    LoadPosition(fenComps[0]);
 
-            if (fenComps.Length > 1) {
-                Game.WhosTurn = fenComps[1].Equals("w") ? PlayerAffiliation.White : PlayerAffiliation.Black;
-            } else {
-                Game.WhosTurn = PlayerAffiliation.White;
-            }
+        //    if (fenComps.Length > 1) {
+        //        Game.WhosTurn = fenComps[1].Equals("w") ? PlayerAffiliation.White : PlayerAffiliation.Black;
+        //    } else {
+        //        Game.WhosTurn = PlayerAffiliation.White;
+        //    }
 
-            if (fenComps.Length > 2) {
-                White.Player.MayCastleShort = fenComps[2].Contains("K");
-                White.Player.MayCastleLong = fenComps[2].Contains("Q");
-                Black.Player.MayCastleShort = fenComps[2].Contains("k");
-                White.Player.MayCastleLong = fenComps[2].Contains("q");
-            } else {
-                White.Player.MayCastleShort = false;
-                White.Player.MayCastleLong = false;
-                Black.Player.MayCastleShort = false;
-                White.Player.MayCastleLong = false;
-            }
+        //    if (fenComps.Length > 2) {
+        //        White.Player.MayCastleShort = fenComps[2].Contains("K");
+        //        White.Player.MayCastleLong = fenComps[2].Contains("Q");
+        //        Black.Player.MayCastleShort = fenComps[2].Contains("k");
+        //        White.Player.MayCastleLong = fenComps[2].Contains("q");
+        //    } else {
+        //        White.Player.MayCastleShort = false;
+        //        White.Player.MayCastleLong = false;
+        //        Black.Player.MayCastleShort = false;
+        //        White.Player.MayCastleLong = false;
+        //    }
 
-            if (fenComps.Length > 4) {
-                Game.HalfmovesSinceLastCaptureOrPawn = int.Parse(fenComps[4]);
-            } else {
-                Game.HalfmovesSinceLastCaptureOrPawn = 0;
-            }
+        //    if (fenComps.Length > 4) {
+        //        Game.HalfmovesSinceLastCaptureOrPawn = int.Parse(fenComps[4]);
+        //    } else {
+        //        Game.HalfmovesSinceLastCaptureOrPawn = 0;
+        //    }
 
-            if (fenComps.Length > 5) {
-                Game.Movecounter = int.Parse(fenComps[5]);
-            } else {
-                Game.Movecounter = 1;
-            }
-        }
+        //    if (fenComps.Length > 5) {
+        //        Game.Movecounter = int.Parse(fenComps[5]);
+        //    } else {
+        //        Game.Movecounter = 1;
+        //    }
+        //}
 
         private void LoadPosition(string fen) {
             var fieldcodes = GenFieldCodes(fen);
@@ -103,7 +103,7 @@ namespace ChessExerciseManagement.Controls {
                     var field = BoardController.FieldControllers[x, y];
 
                     PieceController piece = null;
-                    var tmpC = char.ToLower(c);
+                    var tmpC = char.ToLower(c, System.Globalization.CultureInfo.InvariantCulture);
                     switch (tmpC) {
                         case 'r':
                             piece = new PieceController(new Rook(), player, field);
@@ -232,7 +232,7 @@ namespace ChessExerciseManagement.Controls {
             var fenWhite = White.GetFenCastle();
             var fenBlack = Black.GetFenCastle();
 
-            if (fenWhite == string.Empty && fenBlack == string.Empty) {
+            if (string.IsNullOrEmpty(fenWhite) && string.IsNullOrEmpty(fenBlack)) {
                 sb.Append("-");
             } else {
                 sb.Append(fenWhite);
@@ -252,7 +252,7 @@ namespace ChessExerciseManagement.Controls {
             return sb.ToString();
         }
 
-        private char[,] GenFieldCodes(string fen) {
+        private static char[,] GenFieldCodes(string fen) {
             var ranks = fen.Split('/');
 
             if (ranks.Length == 8) {
@@ -275,7 +275,8 @@ namespace ChessExerciseManagement.Controls {
                     continue;
                 }
 
-                if (int.TryParse(c.ToString(), out int dummy)) {
+                int dummy;
+                if (int.TryParse(c.ToString(), out dummy)) {
                     tmpCounter *= 10;
                     tmpCounter += dummy;
                 } else {
@@ -311,7 +312,7 @@ namespace ChessExerciseManagement.Controls {
             return fieldcodes;
         }
 
-        private char[,] GetFieldCodesNormalFen(string[] ranks) {
+        private static char[,] GetFieldCodesNormalFen(string[] ranks) {
             var fieldcodes = new char[8, 8];
 
             for (var y = 0; y < 8; y++) {
@@ -320,7 +321,8 @@ namespace ChessExerciseManagement.Controls {
 
                     var c = ranks[7 - y][pointer];
 
-                    if (byte.TryParse(c.ToString(), out byte b)) {
+                    byte b;
+                    if (byte.TryParse(c.ToString(), out b)) {
                         var oldX = x;
                         for (var i = oldX; i < b + oldX; i++) {
                             fieldcodes[i, y] = '-';

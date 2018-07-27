@@ -165,7 +165,7 @@ namespace ChessExerciseManagement.Exercises {
                         var exerciseKeys = lineParts3[1].Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (var k in exerciseKeys) {
-                            var key = keys[int.Parse(k)];
+                            var key = keys[int.Parse(k, System.Globalization.NumberStyles.Integer)];
                             if (!dict.Keys.Contains(key)) {
                                 dict.Add(key, new List<string>());
                             }
@@ -178,6 +178,14 @@ namespace ChessExerciseManagement.Exercises {
             }
 
             MergeIndices(dict);
+        }
+
+        public static void DeleteExercise(string fen) {
+            foreach (var pair in Exercises) {
+                pair.Value.Remove(fen);
+            }
+
+            Index.DeleteFile(fen);
         }
 
         private static string FindExercisePath(string fen) {

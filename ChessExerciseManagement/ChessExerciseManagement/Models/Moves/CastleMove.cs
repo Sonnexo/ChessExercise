@@ -3,15 +3,15 @@ using ChessExerciseManagement.Models.Pieces;
 
 namespace ChessExerciseManagement.Models.Moves {
     public class CastleMove : Move {
-        public bool KingSide {
+        public bool Kingside {
             get;
         }
 
-        public Field OldFieldRook {
+        public Field OldfieldRook {
             get;
         }
 
-        public Field NewFieldRook {
+        public Field NewfieldRook {
             get;
         }
 
@@ -19,44 +19,44 @@ namespace ChessExerciseManagement.Models.Moves {
             get;
         }
 
-        public CastleMove(Field oldFieldRook, Field newFieldRook, Piece rook, Field oldFieldKing, Field newFieldKing, Piece king)
-            : this(oldFieldRook, newFieldRook, rook, oldFieldKing, newFieldKing, king, false) {
+        public CastleMove(Field oldfieldrook, Field newfieldrook, Piece rook, Field oldfieldking, Field newfieldking, Piece king)
+            : this(oldfieldrook, newfieldrook, rook, oldfieldking, newfieldking, king, false) {
 
         }
 
-        public CastleMove(Field oldFieldRook, Field newFieldRook, Piece rook, Field oldFieldKing, Field newFieldKing, Piece king, bool check)
-            : this(oldFieldRook, newFieldRook, rook, oldFieldKing, newFieldKing, king, check, false) {
+        public CastleMove(Field oldfieldrook, Field newfieldrook, Piece rook, Field oldfieldking, Field newfieldking, Piece king, bool check)
+            : this(oldfieldrook, newfieldrook, rook, oldfieldking, newfieldking, king, check, false) {
 
         }
 
-        public CastleMove(Field oldFieldRook, Field newFieldRook, Piece rook, Field oldFieldKing, Field newFieldKing, Piece king, bool check, bool mate)
-            : base(oldFieldKing, newFieldKing, king, check, mate) {
+        public CastleMove(Field oldfieldrook, Field newfieldrook, Piece rook, Field oldfieldking, Field newfieldking, Piece king, bool check, bool mate)
+            : base(oldfieldking, newfieldking, king, check, mate) {
 
-            if (oldFieldRook == null) {
-                throw new ArgumentNullException("oldFieldRook must not be null");
+            if (oldfieldrook == null) {
+                throw new ArgumentNullException("oldfieldrook must not be null");
             }
 
-            if (newFieldRook == null) {
-                throw new ArgumentNullException("newFieldRook must not be null");
+            if (newfieldrook == null) {
+                throw new ArgumentNullException("newfieldrook must not be null");
             }
 
             if (rook == null) {
                 throw new ArgumentNullException("rook must not be null");
             }
 
-            var nXR = newFieldRook.X;
-            var oXR = oldFieldRook.X;
+            var nXR = newfieldrook.X;
+            var oXR = oldfieldrook.X;
 
-            KingSide = Math.Abs(nXR - oXR) == 2;
+            Kingside = Math.Abs(nXR - oXR) == 2;
 
-            OldFieldRook = oldFieldRook;
-            NewFieldRook = newFieldRook;
+            OldfieldRook = oldfieldrook;
+            NewfieldRook = newfieldrook;
             Rook = rook;
         }
 
         public override string ToString() {
             string str;
-            if (KingSide) {
+            if (Kingside) {
                 str = "0-0";
             } else {
                 str = "0-0-0";

@@ -7,7 +7,7 @@ namespace ChessExerciseManagement.Models.Pieces {
             set {
                 m_playerAffiliation = value;
                 if (m_playerAffiliation == PlayerAffiliation.Black) {
-                    FenChar = char.ToLower(FenChar);
+                    FenChar = char.ToLower(FenChar, System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
             get {

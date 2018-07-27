@@ -17,7 +17,7 @@ namespace ChessExerciseManagement.Exercises {
             }
             set {
                 if (Directory.Exists(value)) {
-                    if (!value.EndsWith("\\")) {
+                    if (!value.EndsWith("\\", StringComparison.Ordinal)) {
                         value += "\\";
                     }
 
@@ -33,7 +33,7 @@ namespace ChessExerciseManagement.Exercises {
             }
             set {
                 if (Directory.Exists(value)) {
-                    if (!value.EndsWith("\\")) {
+                    if (!value.EndsWith("\\", StringComparison.Ordinal)) {
                         value += "\\";
                     }
 
@@ -99,7 +99,7 @@ namespace ChessExerciseManagement.Exercises {
                 bPath = Basepath;
             }
 
-            if (!bPath.EndsWith("\\")) {
+            if (!bPath.EndsWith("\\", StringComparison.Ordinal)) {
                 bPath += "\\";
             }
 
@@ -116,7 +116,7 @@ namespace ChessExerciseManagement.Exercises {
 
             } while (counter < 1000);
 
-            throw new Exception("Please clear the items in this location: " + bPath);
+            throw new FileNotFoundException("Please clear the items in this location: " + bPath);
         }
     }
 }

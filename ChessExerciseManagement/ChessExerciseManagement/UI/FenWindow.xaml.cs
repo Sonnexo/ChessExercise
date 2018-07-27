@@ -30,9 +30,14 @@ namespace ChessExerciseManagement.UI {
             foreach (var failedNumber in listOfIllegalFens) {
                 MessageBox.Show("FEN in line " + (failedNumber + 1) + " could not be parsed.");
             }
+
+            if (listOfIllegalFens.Count == 0 && lines.Length != 0) {
+                var checkWindow = new CheckWindow(lines);
+                checkWindow.ShowDialog();
+            }
         }
 
-        private bool CheckJonasFen(string fen) {
+        private static bool CheckJonasFen(string fen) {
             if (fen == null || fen.Length == 0) {
                 return false;
             }
@@ -67,7 +72,7 @@ namespace ChessExerciseManagement.UI {
             return true;
         }
 
-        private List<int> ExtractNumbersOfJonasFen(string positionCode) {
+        private static List<int> ExtractNumbersOfJonasFen(string positionCode) {
             var listOfNumbers = new List<int>();
             if (positionCode == null || positionCode.Length == 0) {
                 return listOfNumbers;
@@ -82,7 +87,7 @@ namespace ChessExerciseManagement.UI {
                 } else if (sb.Length != 0) {
                     var numStr = sb.ToString();
                     sb.Clear();
-                    var num = int.Parse(numStr);
+                    var num = int.Parse(numStr, System.Globalization.NumberStyles.Integer);
                     listOfNumbers.Add(num);
                 }
             }
@@ -90,14 +95,14 @@ namespace ChessExerciseManagement.UI {
             if (sb.Length != 0) {
                 var numStr = sb.ToString();
                 sb.Clear();
-                var num = int.Parse(numStr);
+                var num = int.Parse(numStr, System.Globalization.NumberStyles.Integer);
                 listOfNumbers.Add(num);
             }
 
             return listOfNumbers;
         }
 
-        private int CountLetters(List<int> numbers) {
+        private static int CountLetters(List<int> numbers) {
             if (numbers == null || numbers.Count == 0) {
                 return 0;
             }

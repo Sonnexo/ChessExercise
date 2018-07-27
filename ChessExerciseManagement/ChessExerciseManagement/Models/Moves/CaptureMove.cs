@@ -30,14 +30,14 @@ namespace ChessExerciseManagement.Models.Moves {
         public override string ToString() {
             var str = string.Empty;
 
-            var c = char.ToUpper(MovedPiece.FenChar);
+            var c = char.ToUpper(MovedPiece.FenChar, System.Globalization.CultureInfo.InvariantCulture);
             if (c != 'P') {
                 str += c;
             }
 
-            var nX = NewField.X;
-            var nY = NewField.Y;
-            var oX = OldField.X;
+            var nX = Newfield.X;
+            var nY = Newfield.Y;
+            var oX = Oldfield.X;
 
             if (CapturedPiece != null) {
                 if (c == 'P') {
