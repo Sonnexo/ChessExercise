@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessExerciseManagement.UI"
         mc:Ignorable="d"
-        Title="AnnotationWindow" Height="415.678" Width="304.449">
+        Title="AnnotationWindow" Height="415.678" Width="304.449" Closing="Window_Closing">
     <Grid>
         <TextBlock x:Name="HeaderTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Header:" VerticalAlignment="Top"/>
         <TextBox x:Name="HeaderTextBox" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="272"/>

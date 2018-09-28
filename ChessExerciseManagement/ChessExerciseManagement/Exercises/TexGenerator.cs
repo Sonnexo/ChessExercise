@@ -19,6 +19,11 @@ namespace ChessExerciseManagement.Exercises {
             double imageWidth;
 
             switch (imagePaths.Length) {
+                case 1:
+                    rows = 1;
+                    columns = 1;
+                    imageWidth = 0.94;
+                    break;
                 case 4:
                     rows = 2;
                     columns = 2;
@@ -42,7 +47,8 @@ namespace ChessExerciseManagement.Exercises {
             sb.AppendLine(@"\documentclass[10pt, a4paper]{article}")
                 .AppendLine(@"\usepackage[utf8]{inputenc}")
                 .AppendLine(@"\usepackage{graphicx}")
-                .AppendLine(@"\usepackage{subfigure}")
+                .AppendLine(@"\usepackage{subcaption}")
+                .AppendLine(@"\usepackage{caption}")
                 .AppendLine(@"\usepackage{amsmath}")
                 .AppendLine(@"\usepackage{amsfonts}")
                 .AppendLine(@"\usepackage{amssymb}")
@@ -58,8 +64,13 @@ namespace ChessExerciseManagement.Exercises {
 
                 for (var j = 0; j < columns; j++) {
                     var texPath = imagePaths[j + i * columns].Replace('\\', '/');
+                    var caption = exerciseComments[j + i * columns];
 
-                    sb.AppendLine(@"\subfigure{\includegraphics[width = " + imageWidth + @"\textwidth]{" + texPath + @"}}\hfill");
+                    sb.AppendLine(@"\begin{subfigure}[t]{" + imageWidth + @"\textwidth}");
+                    sb.AppendLine(@"\includegraphics[width=\textwidth]{" + texPath + "}");
+                    sb.AppendLine(@"\captionsetup{font=Large}");
+                    sb.AppendLine(@"\caption{" + caption + "}");
+                    sb.AppendLine(@"\end{subfigure}\hfill");
                 }
 
                 sb.AppendLine(@"\end{figure}\\").AppendLine(@"\\ \\ \\ \\ \\");

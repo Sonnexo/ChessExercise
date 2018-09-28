@@ -198,12 +198,12 @@ namespace ChessExerciseManagement.UI {
             var selectedItems = ExerciseListBox.SelectedItems;
             var numberItems = selectedItems.Count;
 
-            if (numberItems != 4 && numberItems != 6 && numberItems != 9) {
-                MessageBox.Show("You must export 4, 6 or 9 images");
+            if (numberItems != 1 && numberItems != 4 && numberItems != 6 && numberItems != 9) {
+                MessageBox.Show("You must export 1, 4, 6 or 9 images");
                 return;
             }
 
-            var annotiationWindow = new AnnotationWindow();
+            var annotiationWindow = new AnnotationWindow(numberItems);
             var dialogResult = annotiationWindow.ShowDialog();
 
             if (!dialogResult.HasValue || !dialogResult.Value) {
