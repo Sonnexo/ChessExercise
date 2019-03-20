@@ -2,23 +2,29 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace ChessExerciseManagement.Exercises {
-    public static class TexGenerator {
-        public static void GenerateTexFile(string path, string header, string task, string[] imagePaths, string[] exerciseComments) {
-            if (File.Exists(path)) {
+namespace ChessExerciseManagement.Exercises
+{
+    public static class TexGenerator
+    {
+        public static void GenerateTexFile(string path, string header, string task, string[] imagePaths, string[] exerciseComments)
+        {
+            if (File.Exists(path))
+            {
                 throw new FileLoadException("File already found at: " + path);
             }
 
             if (header == null || task == null
                 || imagePaths == null || exerciseComments == null
-                || imagePaths.Length != exerciseComments.Length) {
+                || imagePaths.Length != exerciseComments.Length)
+            {
                 throw new ArgumentException("No valid meta data");
             }
 
             int rows, columns;
             double imageWidth;
 
-            switch (imagePaths.Length) {
+            switch (imagePaths.Length)
+            {
                 case 1:
                     rows = 1;
                     columns = 1;
@@ -30,9 +36,9 @@ namespace ChessExerciseManagement.Exercises {
                     imageWidth = 0.47;
                     break;
                 case 6:
-                    rows = 3;
-                    columns = 2;
-                    imageWidth = 0.47;
+                    rows = 2;
+                    columns = 3;
+                    imageWidth = 0.31;
                     break;
                 case 9:
                     rows = 3;
@@ -59,26 +65,39 @@ namespace ChessExerciseManagement.Exercises {
                 .AppendLine(@"\\")
                 .AppendLine(@"\noindent \textit{\Large " + task + @"}\\");
 
-            for (var i = 0; i < rows; i++) {
+            for (var i = 0; i < rows; i++)
+            {
+                if (rows == 2 && imagePaths.Length == 6 && i == 1)
+                {
+                    sb.AppendLine(@"\\ \\ \\ \\ \\").AppendLine(@"\\ \\ \\ \\ \\").AppendLine(@"\\ \\ \\ \\ \\");
+                }
+
                 sb.AppendLine(@"\begin{figure}[h]");
 
-                for (var j = 0; j < columns; j++) {
+                for (var j = 0; j < columns; j++)
+                {
                     var texPath = imagePaths[j + i * columns].Replace('\\', '/');
                     var caption = exerciseComments[j + i * columns];
 
                     sb.AppendLine(@"\begin{subfigure}[t]{" + imageWidth + @"\textwidth}");
-                    sb.AppendLine(@"\includegraphics[width=\textwidth]{" + texPath + "}");
+                    sb.AppendLine(@"\includegraphics[width=" + "\\" + "textwidth]{" + texPath + "}");
                     sb.AppendLine(@"\captionsetup{font=Large}");
                     sb.AppendLine(@"\caption{" + caption + "}");
                     sb.AppendLine(@"\end{subfigure}\hfill");
                 }
 
-                sb.AppendLine(@"\end{figure}\\").AppendLine(@"\\ \\ \\ \\ \\");
+                sb.AppendLine(@"\end{figure}\\");
+
+                if (i != rows + 1)
+                {
+                    sb.AppendLine(@"\\ \\ \\ \\ \\");
+                }
             }
 
             sb.AppendLine(@"\end{document}");
 
-            using (var sw = new StreamWriter(File.Create(path))) {
+            using (var sw = new StreamWriter(File.Create(path)))
+            {
                 sw.Write(sb.ToString());
             }
         }
